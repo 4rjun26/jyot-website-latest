@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  images: {
+    domains: ['jyot.in'], // Add the allowed hostname here
+  },
+
+  // reactStrictMode: true,
 };
 
 export default nextConfig;
