@@ -24,7 +24,7 @@ const YTCards = ()=>{
       <Box p={4}>
           <SimpleGrid columns={{ base: 1, sm: 2, lg:4 }} spacing={4}>
             {releases.map((release, index) => (
-    <Card maxW="sm" borderRadius="lg" overflow="hidden" boxShadow="md">
+    <Card key={index} maxW="sm" borderRadius="lg" overflow="hidden" boxShadow="md">
     <CardBody p="0">
       <iframe
         style={{ width: "100%", height: "480px" }}

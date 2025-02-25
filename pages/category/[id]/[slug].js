@@ -93,11 +93,11 @@ const VideoPage = ()=>{
             allowFullScreen
           ></iframe>
         </Box>
-            <Box m={'20px auto'} w={"100%"} maxW="774px" >
+            <Box p={'10px'} m={'20px auto'} w={"100%"} maxW="774px" >
                 <Text fontFamily={'Oswald, sans-serif'} fontSize={'3xl'} >YOU MAY ALSO LIKE</Text>
                 <Divider mt={'5px'} mb={'5px'} />
-                {releases.map((re)=>(
-                    <Box padding={'10px 5px'}>
+                {releases.map((re,index)=>(
+                    <Box key={index} padding={'10px 5px'}>
                 <Text fontFamily={'Oswald, sans-serif'} fontSize={'md'} color={'gray'} textTransform={'uppercase'} _hover={{color:"orange"}}>
                     <Link href={`/category/${category}/${re.title}`}>{re.title}</Link>
                     </Text>

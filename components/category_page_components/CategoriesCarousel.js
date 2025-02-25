@@ -1,9 +1,11 @@
 import React from "react";
 // import Link from "next/link";
 import { useState } from "react";
-import { Box, Flex,Link, IconButton, Button,Input,InputGroup,Text } from "@chakra-ui/react";
+import { Box, Flex,Link, IconButton, Button,Input,Text,InputGroup, InputRightElement } from "@chakra-ui/react";
 import { BiCategoryAlt } from "react-icons/bi";
+import { Show,Hide } from "@chakra-ui/react";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
 import {
     Drawer,
     DrawerBody,
@@ -106,8 +108,8 @@ const CategoriesCarousel = ({category}) => {
           <DrawerHeader fontFamily={'Oswald, sans-serif'}>Caterogies</DrawerHeader>
 
           <DrawerBody>
-            {buttonsArray.map((ba)=>(
-                <Flex transitionDuration={'0.3s'}  _hover={{bg:"rgba(236, 142, 0, 0.4)"}} alignItems={'center'} p={'5px'} w={'full'} m={'10px 0px'} borderBottom={'1px solid lightgray'}>
+            {buttonsArray.map((ba,index)=>(
+                <Flex key={index} transitionDuration={'0.3s'}  _hover={{bg:"rgba(236, 142, 0, 0.4)"}} alignItems={'center'} p={'5px'} w={'full'} m={'10px 0px'} borderBottom={'1px solid lightgray'}>
             <Link onClick={onClose}  href={`/category/${ba}`}>{ba}</Link>
             </Flex>
             ))}
@@ -118,10 +120,15 @@ const CategoriesCarousel = ({category}) => {
       </Drawer>
 
       <Flex justifyContent={'right'} gap={'10px'} m={'auto'} alignItems={'center'} w={'95%'} h={'50px'}>
-        <Text fontSize={'2xl'} borderBottom={'2px solid brown'} fontFamily={'Oswald, sans-serif'} mr={'auto'}>{category}</Text>
-        <Button rightIcon={<BiCategoryAlt/>} ref={btnRef} colorScheme='orange' onClick={onOpen} size={'sm'} variant={'solid'}>Categories</Button>
-        <Button rightIcon={<MdOutlineAccessTime />} colorScheme="orange" size={'sm'} variant={'solid'}>Recent Posts</Button>
-                  <Input
+        <Text fontSize={'2xl'} textTransform={'uppercase'} borderBottom={'2px solid brown'} fontFamily={'Oswald, sans-serif'} mr={'auto'}>{category}</Text>
+        <Show above="md">
+        <Button rightIcon={<BiCategoryAlt />} ref={btnRef} colorScheme="orange" onClick={onOpen} size="sm">
+          Categories
+        </Button>
+        <Button rightIcon={<MdOutlineAccessTime />} colorScheme="orange" size="sm">
+          Recent Posts
+        </Button>
+        <Input
                     _focus={{ boxShadow: "none" }}
                     fontWeight="bold"
                     type="text"
@@ -143,7 +150,55 @@ const CategoriesCarousel = ({category}) => {
                     >
                     SEARCH
                     </Button>
+                    </Show>
+      
+      <Show below="md">
+        <IconButton 
+          icon={<BiCategoryAlt />} 
+          ref={btnRef} 
+          colorScheme="orange" 
+          onClick={onOpen} 
+          size="sm"
+          fontSize={'xl'}
+          aria-label="Categories"
+        />
+        <IconButton 
+          icon={<MdOutlineAccessTime />} 
+          colorScheme="orange" 
+          size="sm"
+          fontSize={'xl'}
+          aria-label="Recent Posts"
+        />
+      </Show>
+                 
       </Flex>
+      <Show below="md">
+      <Box w={'full'}>
+      <InputGroup display={'flex'} alignItems={'center'} p={'10px'} w="100%">
+      <Input
+        _focus={{ boxShadow: "none" }}
+        fontWeight="bold"
+        type="text"
+        size="md"
+        border="1px solid gray"
+        placeholder="Search..."
+      />
+      <InputRightElement>
+      <IconButton
+                    icon={<MdSearch />}
+                      aria-label="Search"
+                      colorScheme="orange"
+                      h={'full'}
+                      mt={'20px'}
+                      mr={'22px'}
+                      fontSize={'xl'}
+                    /> 
+      </InputRightElement>
+    </InputGroup>
+        
+                   
+      </Box>
+      </Show>
     </>
   );
 };

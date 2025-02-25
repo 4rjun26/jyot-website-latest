@@ -65,8 +65,8 @@ const CategoriesVideosList = ({category})=>{
         <>
             <Box w={'full'} p={4}>
                 <SimpleGrid columns={{ base: 1, sm: 2, lg:3 }} spacing={4}>
-                {releases.map((res)=>(
-                    <Box borderRadius={'15px'} m={'auto'} w={'full'}  h={'450px'} border={'1px solid gray'}>
+                {releases.map((res,index)=>(
+                    <Box key={index} borderRadius={'15px'} m={'auto'} w={'full'} h={{md:"450px"}} minH={{ md: "450px" }}  border={'1px solid gray'}>
                         <Box w={'full'} h={'70%'} bg={'black'} borderRadius={'15px'}>
                             <Link href={`/category/${category}/${res.title}`}><Image borderRadius={'15px 15px 0px 0px'} src={res.imgSrc} w={'full'} _hover={{boxShadow:"dark-lg"}} h={'full'} objectFit={'cover'} transitionDuration={'0.3s'} /></Link>
                         </Box>

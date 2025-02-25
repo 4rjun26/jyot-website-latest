@@ -22,9 +22,9 @@ const ar=[1,2,3,4];
     <>
      <div className="navigation-wrapper">
         <div ref={sliderRef} className="keen-slider">
-      {ar.map((a)=>(
-        <div className="keen-slider__slide number-slide1">
-            <Box w='100vw' h={'600px'}>
+      {ar.map((a,index)=>(
+        <div key={index} className="keen-slider__slide number-slide1">
+            <Box w='100vw' h={'auto'}>
                 <Image src={`/c${a}.jpg`} width={1000} height={1000} style={{width:"100%",height:"100%",objectFit:"cover"}} />
             </Box>
           </div>

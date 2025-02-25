@@ -3,6 +3,7 @@ import { Box, Flex, Link, Input, Button, IconButton } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
 import { BsChevronRight,BsChevronDown } from "react-icons/bs";
 import Image from "next/image";
+import CategoriesCarousel from "../category_page_components/CategoriesCarousel";
 import {
     Drawer,
     DrawerBody,
@@ -40,22 +41,23 @@ const Navbar = () => {
           </Button>
 
           </Box>
+          {/* <CategoriesCarousel /> */}
           <Link textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
           Podcast
           </Link>
-          <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link textTransform={"uppercase"} href="https://vk.jyot.in/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Vasudhaiva Kutumbakam
           </Link>
-          <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link target="_blank" textTransform={"uppercase"} href="https://pages.razorpay.com/stores/gyanjyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Gyan Jyot Book
           </Link>
-          <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link textTransform={"uppercase"} href="/category/events" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Events
           </Link>
           <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Blog
           </Link>
-          <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link textTransform={"uppercase"} href="/contact" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Contact
           </Link>
 
@@ -83,7 +85,7 @@ const Navbar = () => {
           <DrawerHeader fontFamily={'Oswald, sans-serif'} textDecoration={'underline'} fontWeight={'normal'}>ABOUT</DrawerHeader>
 
           <DrawerBody>
-          <Link display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link display={'block'} textTransform={"uppercase"} href="/about" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
           About Jyot
           </Link>
           <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
@@ -100,19 +102,19 @@ const Navbar = () => {
           Reclaim ranakpur
           </Link>
           <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link  display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link   target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="https://savehumanity.jyot.in/?src=jyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
            Save humanity
           </Link>
           <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link  display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="https://saveshikharji.com/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
            Save shikharji
           </Link>
           <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link  display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/events/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             shatrunjay adinath mahima mahotsav
           </Link>
           <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link  display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/events/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             raksha dharma abhiyan
           </Link>
          

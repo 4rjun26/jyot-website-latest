@@ -22,7 +22,7 @@ const Banner = ({text}) => {
 
                       </CardBody>
                     </Card>
-                    <Card  bg={'black'} p={'0px'} h="430px" boxShadow="md" borderRadius="0px">
+                    <Card  bg={'black'} p={'0px'} minh="30px" boxShadow="md" borderRadius="0px">
                       <CardBody>
                       <Box w={'full'} h={'full'} bg={'black'}>
                         <Text fontWeight={'bold'} fontSize={'2rem'} color={'white'} fontFamily={'Oswald, sans-serif'}>

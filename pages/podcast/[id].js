@@ -71,7 +71,7 @@ const PodcastPage = () => {
     <Box p={4}>
                     <SimpleGrid columns={{ base: 1, sm: 2, lg:4 }} spacing={4}>
               {releases.map((release, index) => (
-                <Card borderRadius={'0px'} maxW='sm' transitionDuration="0.3s" cursor={"pointer"} _hover={{bg:"rgb(240,240,240)"}}>
+                <Card key={index} borderRadius={'0px'} maxW='sm' transitionDuration="0.3s" cursor={"pointer"} _hover={{bg:"rgb(240,240,240)"}}>
                   <CardBody borderRadius={'0px'}>
                     <Image
                       src={release.imgSrc}

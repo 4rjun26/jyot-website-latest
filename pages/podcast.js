@@ -49,7 +49,7 @@ export default function podcast(){
                <Box p={4}>
                     <SimpleGrid columns={{ base: 1, sm: 2, lg:4 }} spacing={4}>
               {releases.map((release, index) => (
-                <PodcastCard imgSrc={release.imgSrc} title={release.title} episodeCount={release.episodeCount} />
+                <PodcastCard key={index} imgSrc={release.imgSrc} title={release.title} episodeCount={release.episodeCount} />
               ))}
               </SimpleGrid>
               </Box>

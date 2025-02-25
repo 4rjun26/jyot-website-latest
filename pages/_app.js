@@ -1,18 +1,28 @@
 import "@/styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import ScrollToTop from "@/components/index_page_components/ScrollToTop";
+import { ChakraProvider, Show, Hide, Box } from "@chakra-ui/react";
 import Footer from "@/components/index_page_components/Footer";
-// import useSmoothScroll from "@/hooks/useSmoothScroll";
+import Chatbot from "@/components/Chatbot";
 import Navbar from "@/components/index_page_components/Navbar";
+import MobileNavbar from "@/components/index_page_components/MobileNavbar";
 
 export default function App({ Component, pageProps }) {
-  
   return (
-  <ChakraProvider>
-    <ScrollToTop />
-    <Navbar />
-    <Component {...pageProps} />
-    <Footer />
+    <ChakraProvider>
+      {/* Show MobileNavbar only on small screens */}
+      <Show below="lg">
+        <MobileNavbar />
+      </Show>
+
+      {/* Show Navbar only on large screens */}
+      <Hide below="lg">
+        <Navbar />
+      </Hide>
+
+      <Box pt="60px"> {/* Avoid content overlap */}
+        <Chatbot />
+        <Component {...pageProps} />
+        <Footer />
+      </Box>
     </ChakraProvider>
-    );
+  );
 }
