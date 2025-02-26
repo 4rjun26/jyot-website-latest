@@ -4,6 +4,7 @@ import Footer from "@/components/index_page_components/Footer";
 import Chatbot from "@/components/Chatbot";
 import Navbar from "@/components/index_page_components/Navbar";
 import MobileNavbar from "@/components/index_page_components/MobileNavbar";
+import MusicPlayer from "@/components/MusicPlayer";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -19,7 +20,8 @@ export default function App({ Component, pageProps }) {
       </Hide>
 
       <Box pt="60px"> {/* Avoid content overlap */}
-        <Chatbot />
+        {/* <Chatbot /> */}
+        <MusicPlayer />
         <Component {...pageProps} />
         <Footer />
       </Box>

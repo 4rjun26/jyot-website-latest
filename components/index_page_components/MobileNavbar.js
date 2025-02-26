@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Flex, IconButton, useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, VStack, Link, Image } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Input } from "@chakra-ui/react";
+import Chatbot from "../Chatbot";
 import {
   Accordion,
   AccordionItem,
@@ -25,17 +26,19 @@ const MobileNavbar = () => {
         bg={'white'}
         color="white"
         align="center"
-        justify="space-between"
+        justifyContent={'right'}
         position="fixed"
+        gap={'20px'}
         top="0"
         zIndex="1000"
       >
         {/* Logo */}
-        <Box>
+        <Box mr={'auto'}>
           <Image src="/jyot_logo.png" alt="Logo" h="50px" />
         </Box>
 
         {/* Hamburger Menu */}
+        <Chatbot />
         <IconButton
           icon={<GiHamburgerMenu />}
           aria-label="Open Menu"

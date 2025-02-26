@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, SimpleGrid, Card, CardBody, Image, Text, Link, Button } from "@chakra-ui/react";
+import SoundPlayer from "./SoundPlayer";
 
 const podcasts = [
   {
@@ -7,24 +8,28 @@ const podcasts = [
     title: "Ep 31 - Chupo traas | Mokshmarg ni shrenio",
     src: "Mokshmarg ni shrenio",
     soundcloudUrl:"https://soundcloud.com/jyotindia/ep-30-shu-tame-man-thi-sukhi-thava-mango-cho-mokshmarg-ni-shrenio",
+    soundSrc:"/sample_sound_1.mp3"
   },
   {
     imgSrc: "https://jyot.in/wp-content/uploads/2025/02/30-shu-tame-man-thi-sukhi-thava-mango-cho.jpg",
     title: "Ep 30- Shu tame man thi sukhi thava mango cho | Mokshmarg ni shrenio",
     src: "Mokshmarg ni shrenio",
     soundcloudUrl:"https://soundcloud.com/jyotindia/ep-30-shu-tame-man-thi-sukhi-thava-mango-cho-mokshmarg-ni-shrenio",
+        soundSrc:"/sample_sound_2.mp3"
   },
   {
     imgSrc: "https://jyot.in/wp-content/uploads/2025/01/11-sangharsh-koni-sathe-karay.jpg",
     title: "Ep 11 - Sangharsh koni sathe karay | Jinshasan No Sar - Namaskar Mahamantra",
     src: "Jinshasan No Sar - Namaskar Mahamantra",
     soundcloudUrl:"https://soundcloud.com/jyotindia/ep-30-shu-tame-man-thi-sukhi-thava-mango-cho-mokshmarg-ni-shrenio",
+        soundSrc:"/sample_sound_3.mp3"
   },
   {
     imgSrc: "https://jyot.in/wp-content/uploads/2025/01/10-jitvana-3-rasta.jpg",
     title: "Ep 10 - Jitvana 3 rasta | Jinshasan No Sar - Namaskar Mahamantra",
     src: "Jinshasan No Sar - Namaskar Mahamantra",
     soundcloudUrl:"https://soundcloud.com/jyotindia/ep-30-shu-tame-man-thi-sukhi-thava-mango-cho-mokshmarg-ni-shrenio",
+        soundSrc:"/sample_sound_4.mp3"
   },
 ];
 
@@ -60,8 +65,6 @@ const PodcastCards = () => {
                   bottom={0}
                   left={0}
                   w="100%"
-                  h="20%"
-                  bg="rgba(0, 0, 0, 0.6)"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -69,22 +72,9 @@ const PodcastCards = () => {
                   transition="opacity 0.3s ease"
                   _hover={{ opacity: 1 }}
                 >
-                  <Button fontSize="1.2rem" fontWeight="bold">
-                    🎧 Listen Now
-                  </Button>
+                  <SoundPlayer src={podcast.soundSrc} />
                 </Box>
               </Box>
-
-              {/* <Box w="100%" h="40%">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  scrolling="no"
-                  frameBorder="no"
-                  allow="autoplay"
-                  src={podcast.soundcloudUrl}
-                ></iframe>
-              </Box> */}
             </CardBody>
           </Card>
         ))}

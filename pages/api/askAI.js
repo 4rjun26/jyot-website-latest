@@ -1,62 +1,78 @@
-// pages/api/askClaude.js
-import Anthropic from '@anthropic-ai/sdk';
-import fetch from 'node-fetch';
+
+
+// import fs from "fs/promises";
+// import { OpenAI } from "openai";
+
+// const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// export default async function handler(req, res) {
+//   if (req.method !== "POST") {
+//     return res.status(405).json({ error: "Only POST requests allowed" });
+//   }
+
+//   try {
+//     const { question } = req.body;
+//     if (!question) {
+//       return res.status(400).json({ error: "Question is required" });
+//     }
+
+//     // Read stored text from storedText.txt
+//     let textData = await fs.readFile("D:/jyot/jyot-portfolio/public/maynasundari.txt", "utf-8");
+    
+//     const maxLength = 3000; // Adjust as needed
+//     textData = textData.substring(0, maxLength);
+//     // Send the text + question to OpenAI
+//     const response = await openai.chat.completions.create({
+//       model: "gpt-3.5-turbo",
+//       messages: [
+//         { role: "system", content: "You are an AI assistant that answers questions based on the provided Language text. Detect the language and answer in the detected language itself." },
+//         { role: "user", content: `Text data:\n${textData}\n\nQuestion: ${question}` }
+//       ],
+//     });
+
+//     res.status(200).json({ answer: response.choices[0].message.content });
+//   } catch (error) {
+//     console.error("OpenAI API error:", error);
+//     res.status(500).json({ error: "Failed to fetch response" });
+//   }
+// }
+
+
+import fs from "fs/promises";
+import { OpenAI } from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Only POST requests allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST requests allowed" });
   }
 
   try {
-    // Extract PDF URL from request body
-    const { pdfURL } = req.body;
-
-    if (!pdfURL) {
-      return res.status(400).json({ error: 'Missing pdfURL in request body' });
+    const { question } = req.body;
+    if (!question) {
+      return res.status(400).json({ error: "Question is required" });
     }
 
-    // Fetch the file
-    const pdfResponse = await fetch(pdfURL);
-    if (!pdfResponse.ok) {
-      throw new Error(`Failed to fetch PDF: ${pdfResponse.statusText}`);
-    }
+    // Load stored context from JSON file
+    let contextChunks = JSON.parse(await fs.readFile("D:/jyot/jyot-portfolio/public/maynasundari_context.json", "utf-8"));
 
-    // Convert the file to base64
-    const arrayBuffer = await pdfResponse.arrayBuffer();
-    const pdfBase64 = Buffer.from(arrayBuffer).toString('base64');
+    // Keep only the latest chunks that fit within 8K tokens (~16,000 characters)
+    let contextText = contextChunks.slice(-5).join("\n"); // Adjust as needed
 
-    // Send the API request
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY, // Ensure this is set in .env.local
-    });
-
-    const response = await anthropic.messages.create({
-      model: 'claude-3-7-sonnet-20250219',
-      max_tokens: 1024,
+    // Send context + question to OpenAI
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
       messages: [
-        {
-          content: [
-            {
-              type: 'document',
-              source: {
-                media_type: 'application/pdf',
-                type: 'base64',
-                data: pdfBase64,
-              },
-            },
-            {
-              type: 'text',
-              text: 'Which model has the highest human preference win rates across each use-case?',
-            },
-          ],
-          role: 'user',
-        },
+       { role: "system", content: "You are an AI assistant that answers questions in detail based on the provided Language text. Detect the language and answer in the detected language itself. Also translate it to english and Append both with 'T2E' between them." },
+{ role: "user", content: `Context:\n${contextText}\n\nQuestion: ${question}` }
       ],
     });
 
-    return res.status(200).json(response);
+    res.status(200).json({ answer: response.choices[0].message.content });
+
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: error.message });
+    console.error("Error:", error);
+    res.status(500).json({ error: "Failed to fetch response" });
   }
 }

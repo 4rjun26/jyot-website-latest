@@ -3,6 +3,7 @@ import { Box, Flex, Link, Input, Button, IconButton } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
 import { BsChevronRight,BsChevronDown } from "react-icons/bs";
 import Image from "next/image";
+import Chatbot from "../Chatbot";
 import CategoriesCarousel from "../category_page_components/CategoriesCarousel";
 import {
     Drawer,
@@ -34,6 +35,8 @@ const Navbar = () => {
         <Box mr={'auto'} w={'50px'} h={'100%'}>
          <Image src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
         </Box>
+
+        <Chatbot />
 
             <Box>
           <Button rightIcon={<BsChevronDown/>} display={'flex'} alignItems={'center'} ref={btnRef} onClick={onOpen} variant={'unstyled'} fontWeight={'normal'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
