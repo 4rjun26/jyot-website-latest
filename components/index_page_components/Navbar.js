@@ -1,14 +1,20 @@
 import React from "react";
-import { Box, Flex, Link, Input, Button, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Input, Button, IconButton,Text } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
+import { useState } from "react";
 import { BsChevronRight,BsChevronDown } from "react-icons/bs";
 import Image from "next/image";
 import Chatbot from "../Chatbot";
-import CategoriesCarousel from "../category_page_components/CategoriesCarousel";
+import Link from "next/link";
+import styles from '@/styles/Home.module.css'
+import CategoryButton from "./CategoryButton";
+import { useRouter } from "next/router";
+import {
+  MenuItem
+} from '@chakra-ui/react'
 import {
     Drawer,
     DrawerBody,
-    DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
@@ -25,42 +31,199 @@ import {
 
 const Navbar = () => {
     const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure();
+    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+    const router = useRouter();
+    const [searchValue, setSearchValue] = useState("");
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
+    const handleSearch = () => {
+      if (searchValue.trim()) {
+        router.push(`/search?s=${encodeURIComponent(searchValue)}`);
+        onSearchClose();
+        setSearchValue("");
+      }
+    };
   return (
     <>
-     <Flex boxShadow={'md'} borderBottom={'1px solid lightgray'} gap={'30px'} alignItems="center" justifyContent={'right'} w={'100vw'} h={'53px'} pr={'20px'}>
+     <Flex position={'fixed'} zIndex={999} bg={'white'} boxShadow={'md'} borderBottom={'1px solid lightgray'} gap={'25px'} alignItems="center" justifyContent={'right'} w={'100vw'} h={'53px'} pr={'20px'}>
         {/* Logo */}
         <Box mr={'auto'} w={'50px'} h={'100%'}>
-         <Image src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
+         <Image alt="sample" src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
         </Box>
 
-        <Chatbot />
+        {/* <Chatbot /> */}
 
-            <Box>
-          <Button rightIcon={<BsChevronDown/>} display={'flex'} alignItems={'center'} ref={btnRef} onClick={onOpen} variant={'unstyled'} fontWeight={'normal'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            About
-          </Button>
-
-          </Box>
-          {/* <CategoriesCarousel /> */}
-          <Link textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-          Podcast
+      
+              <CategoryButton />
+      
+              <Menu>
+      <MenuButton
+        textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+        color="black"
+        _hover={{ textDecoration: "none", color: "orange" }}
+        as={Button}
+        rightIcon={<BsChevronDown />}
+        fontWeight={'light'}
+        bg={'none'}
+      >
+        About
+      </MenuButton>
+      <MenuList shadow={"lg"}>
+        <MenuItem  textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link
+           
+            href="/article"
+           
+          >
+            About Jyot
           </Link>
-          <Link textTransform={"uppercase"} href="https://vk.jyot.in/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+        </MenuItem>
+        <MenuItem textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link
+            href="/acharya-yugbhushansurij"
+          >
+            Spiritual Sovereign Jainacharya Yugbhushan Suriji
+          </Link>
+        </MenuItem>
+        <MenuItem
+        as={'div'}
+          onMouseEnter={() => setIsSubMenuOpen(true)}
+          onMouseLeave={() => setIsSubMenuOpen(false)}
+        >
+          <Menu isOpen={isSubMenuOpen} placement="right-start">
+            <MenuButton
+              w={"full"}
+              display={"flex"}
+              alignItems={"center"}
+              textAlign={"left"}
+              rightIcon={<BsChevronRight />}
+              variant={"unstyled"}
+              fontWeight={"normal"}
+              as={Button}
+              textTransform={"uppercase"}
+              fontFamily={"Oswald, sans-serif"}
+              color="black"
+              _hover={{ textDecoration: "none", color: "orange" }}
+            >
+              Initiations
+            </MenuButton>
+            <MenuList
+              p={"10px 10px"}
+              ml={"0px"}
+              mt={"0px"}
+              borderRadius={"0px"}
+            >
+              <Link
+                href="/reclaim-ranakpur"
+              >
+                <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+                Reclaim Ranakpur
+                </Text>
+              </Link>
+              <Divider borderColor={"gray"} mb={"5px"} mt={"5px"} />
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://savehumanity.jyot.in/?src=jyot"
+              >
+                <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+                Save Humanity
+                </Text>
+              </Link>
+              <Divider borderColor={"gray"} mb={"5px"} mt={"5px"} />
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://saveshikharji.com/"
+              >
+                <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+                Save Shikharji
+                </Text>
+              </Link>
+              <Divider borderColor={"gray"} mb={"5px"} mt={"5px"} />
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="/events/shatrunjay-adinath-mahima-mahotsav"
+              >
+                <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+                Shatrunjay Adinath Mahima Mahotsav
+                </Text>
+              </Link>
+              <Divider borderColor={"gray"} mb={"5px"} mt={"5px"} />
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="/events/raksha-dharma-abhiyan/"
+              >
+                <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
+            color="black"
+            _hover={{ textDecoration: "none", color: "orange" }}>
+                Raksha Dharma Abhiyan
+                </Text>
+              </Link>
+            </MenuList>
+          </Menu>
+        </MenuItem>
+      </MenuList>
+    </Menu>    
+          <Link className={styles.nextlink} textTransform={"uppercase"} href="/watch" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          Watch
+          </Link>
+
+          <Menu>
+  <MenuButton w={'fit-content'} mr={'-25px'} _hover={'none'} as={Button} rightIcon={<BsChevronDown />} bg={'none'} fontWeight={'light'} className={styles.nextlink}>
+    Listen
+  </MenuButton>
+  <MenuList>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    Podcast
+    </Link>
+    </MenuItem>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    Song
+    </Link>
+    </MenuItem>
+  </MenuList>
+</Menu>
+
+<Menu>
+  <MenuButton  w={'fit-content'}  _hover={'none'} as={Button} rightIcon={<BsChevronDown />} bg={'none'} fontWeight={'light'} className={styles.nextlink}>
+    Read
+  </MenuButton>
+  <MenuList shadow={'lg'}>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/article" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    Article
+    </Link>
+    </MenuItem>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/tweet" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    Tweet
+    </Link>
+    </MenuItem>
+  </MenuList>
+</Menu>
+          <Link className={styles.nextlink} textTransform={"uppercase"} href="https://vk.jyot.in/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Vasudhaiva Kutumbakam
           </Link>
-          <Link target="_blank" textTransform={"uppercase"} href="https://pages.razorpay.com/stores/gyanjyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            Gyan Jyot Book
-          </Link>
-          <Link textTransform={"uppercase"} href="/category/events" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link className={styles.nextlink} textTransform={"uppercase"} href="/events" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Events
           </Link>
-          <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            Blog
-          </Link>
-          <Link textTransform={"uppercase"} href="/contact" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <Link className={styles.nextlink} textTransform={"uppercase"} href="/contact" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
             Contact
           </Link>
 
@@ -76,73 +239,22 @@ const Navbar = () => {
         />
       </Flex>
 
-      <Drawer
-        isOpen={isOpen}
-        placement='top'
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent w={'300px'} margin={'auto'}>
-          <DrawerCloseButton />
-          <DrawerHeader fontFamily={'Oswald, sans-serif'} textDecoration={'underline'} fontWeight={'normal'}>ABOUT</DrawerHeader>
-
-          <DrawerBody>
-          <Link display={'block'} textTransform={"uppercase"} href="/about" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-          About Jyot
-          </Link>
-          <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link  display={'block'}  textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            Spiritual sovreign jainacharya yugbhushan suriji
-          </Link>
-          <Divider borderColor={'gray'} mt={'5px'} />
-          <Menu>
-  <MenuButton w={'full'} display={'flex'} alignItems={'center'} textAlign={'left'} rightIcon={<BsChevronRight/>} variant={'unstyled'} fontWeight={'normal'} as={Button} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }} >
-    Initiations
-  </MenuButton>
-  <MenuList p={'10px 10px'} ml={'270px'} mt={'-50px'} borderRadius={'0px'}>
-  <Link display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-          Reclaim ranakpur
-          </Link>
-          <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link   target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="https://savehumanity.jyot.in/?src=jyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-           Save humanity
-          </Link>
-          <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="https://saveshikharji.com/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-           Save shikharji
-          </Link>
-          <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/events/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            shatrunjay adinath mahima mahotsav
-          </Link>
-          <Divider borderColor={'gray'} mb={'5px'} mt={'5px'} />
-          <Link target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/events/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-            raksha dharma abhiyan
-          </Link>
-         
-
-    {/* <MenuItem>
-    
-    </MenuItem> */}
-  </MenuList>
-</Menu>
-          </DrawerBody>
-
-        </DrawerContent>
-      </Drawer>
 
       <Drawer isOpen={isSearchOpen} onClose={onSearchClose} placement="top">
         <DrawerOverlay />
-        <DrawerContent  w={'300px'} borderBottomRightRadius={'10px'} borderBottomLeftRadius={'10px'} marginLeft={'auto'}>
+        <DrawerContent  w={'400px'} borderBottomRightRadius={'10px'} borderBottomLeftRadius={'10px'} marginLeft={'auto'}>
           <DrawerCloseButton />
           <DrawerHeader>Search</DrawerHeader>
           <DrawerBody pb={'30px'}>
             <Flex w={'100%'}>
             <Input 
+            type="search"
             border={'1px solid gray'}
              borderTopLeftRadius={'30px'}
         borderBottomLeftRadius={'30px'}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Trigger search on Enter key
          placeholder="Type to search..." />
             <IconButton
         fontSize={'25px'}
@@ -150,6 +262,7 @@ const Navbar = () => {
           icon={<MdSearch />}
         colorScheme="orange"
         borderTopRightRadius={'50%'}
+        onClick={handleSearch}
         borderBottomRightRadius={'50%'}
         />
             </Flex>

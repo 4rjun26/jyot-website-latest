@@ -11,7 +11,7 @@ const Banner = ({text}) => {
                     <Card  bg={'black'} p={'0px'} h="450px" boxShadow="md" borderRadius="0px">
                       <CardBody>
                         <Box w={'full'} h={'full'} bg={'black'}>
-                          <Image src="https://jyot.in/wp-content/uploads/2024/06/Pavagadh-Tirthraksha-letter-to-cm-yugbhushansuri-1024x576.jpg"
+                          <Image alt="sample" src="https://jyot.in/wp-content/uploads/2024/06/Pavagadh-Tirthraksha-letter-to-cm-yugbhushansuri-1024x576.jpg"
                           width={1000}
                           height={1000}
                           objectFit={'contain'}

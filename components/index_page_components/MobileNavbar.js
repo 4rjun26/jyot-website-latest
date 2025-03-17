@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Box, Flex, IconButton, useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, VStack, Link, Image } from "@chakra-ui/react";
+import { Box, Flex, IconButton, useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, VStack, Image } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Input } from "@chakra-ui/react";
 import Chatbot from "../Chatbot";
+import CategoryButton from "./CategoryButton";
+import Link from "next/link";
+import styles from '@/styles/Home.module.css'
+import { useRouter } from "next/router";
+
 import {
   Accordion,
   AccordionItem,
@@ -13,6 +18,17 @@ import {
 
 const MobileNavbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+ const router = useRouter();
+    const [searchValue, setSearchValue] = useState("");
+
+    const handleSearch = () => {
+      if (searchValue.trim()) {
+        router.push(`/search?s=${encodeURIComponent(searchValue)}`);
+        onClose();
+        setSearchValue("");
+
+      }
+    };
 
   return (
     <>
@@ -38,7 +54,8 @@ const MobileNavbar = () => {
         </Box>
 
         {/* Hamburger Menu */}
-        <Chatbot />
+        <CategoryButton />
+        {/* <Chatbot /> */}
         <IconButton
           icon={<GiHamburgerMenu />}
           aria-label="Open Menu"
@@ -60,7 +77,8 @@ const MobileNavbar = () => {
           <DrawerBody>
             <VStack spacing={4} align="start">
 
-        <Input type="search" border={'1px solid gray'} placeholder="Search..." />
+        <Input type="search"  value={searchValue} onKeyDown={(e) => e.key === "Enter" && handleSearch()} 
+        onChange={(e) => setSearchValue(e.target.value)} border={'1px solid gray'} placeholder="Search..." />
 
             <Accordion allowMultiple w={'full'}>
   <AccordionItem>
@@ -74,10 +92,10 @@ const MobileNavbar = () => {
     </h2>
     <AccordionPanel pb={4}>
     <VStack spacing={4} align="start">
-       <Link display={'block'} textTransform={"uppercase"} href="/about" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+       <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/about" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                 About Jyot
                 </Link>
-                <Link  display={'block'}  textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/acharya-yugbhushansurij" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                   Spiritual sovreign jainacharya yugbhushan suriji
                 </Link>
                 <Accordion allowMultiple w={'full'}>
@@ -92,19 +110,19 @@ const MobileNavbar = () => {
     </h2>
     <AccordionPanel pb={4}>
     <VStack spacing={4} align="start">
-    <Link display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
              Reclaim ranakpur
              </Link>
-             <Link   target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="https://savehumanity.jyot.in/?src=jyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink}   target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="https://savehumanity.jyot.in/?src=jyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
               Save humanity
              </Link>
-             <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="https://saveshikharji.com/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="https://saveshikharji.com/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
               Save shikharji
              </Link>
-             <Link target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/events/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/events/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                shatrunjay adinath mahima mahotsav
              </Link>
-             <Link target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/events/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/events/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                raksha dharma abhiyan
              </Link>
             </VStack>
@@ -116,22 +134,63 @@ const MobileNavbar = () => {
     </AccordionPanel>
   </AccordionItem>
   </Accordion>
-                <Link textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-                        Podcast
+                <Link  onClick={onClose} className={styles.nextlink} textTransform={"uppercase"} href="/watch" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                        Watch
                         </Link>
-                        <Link textTransform={"uppercase"} href="https://vk.jyot.in/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                        
+            <Accordion allowMultiple w={'full'}>
+  <AccordionItem>
+    <h2>
+      <AccordionButton textTransform={"uppercase"}  href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" p={'5px 0px'} w={'100%'}>
+        <Box as='span' flex={'1'}>
+          Listen
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+    <VStack spacing={4} align="start">
+       <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+              Podcast
+                </Link>
+                <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                  Song
+                </Link>
+    </VStack>
+
+    </AccordionPanel>
+  </AccordionItem>
+  </Accordion>
+  <Accordion allowMultiple w={'full'}>
+  <AccordionItem>
+    <h2>
+      <AccordionButton textTransform={"uppercase"}  href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" p={'5px 0px'} w={'100%'}>
+        <Box as='span' flex={'1'}>
+          Read
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+    <VStack spacing={4} align="start">
+       <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/article" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+              Article
+                </Link>
+                <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/tweet" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                  Tweet
+                </Link>
+    </VStack>
+
+    </AccordionPanel>
+  </AccordionItem>
+  </Accordion>
+                        <Link  onClick={onClose} className={styles.nextlink} textTransform={"uppercase"} href="https://vk.jyot.in/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                           Vasudhaiva Kutumbakam
                         </Link>
-                        <Link target="_blank" textTransform={"uppercase"} href="https://pages.razorpay.com/stores/gyanjyot" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-                          Gyan Jyot Book
-                        </Link>
-                        <Link textTransform={"uppercase"} href="/category/events" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                        <Link  onClick={onClose} className={styles.nextlink} textTransform={"uppercase"} href="/events" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                           Events
                         </Link>
-                        <Link textTransform={"uppercase"} href="#" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-                          Blog
-                        </Link>
-                        <Link textTransform={"uppercase"} href="/contact" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                        <Link  onClick={onClose} className={styles.nextlink} textTransform={"uppercase"} href="/contact" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                           Contact
                         </Link>
             </VStack>

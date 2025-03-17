@@ -1,43 +1,5 @@
 
 
-// import fs from "fs/promises";
-// import { OpenAI } from "openai";
-
-// const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-// export default async function handler(req, res) {
-//   if (req.method !== "POST") {
-//     return res.status(405).json({ error: "Only POST requests allowed" });
-//   }
-
-//   try {
-//     const { question } = req.body;
-//     if (!question) {
-//       return res.status(400).json({ error: "Question is required" });
-//     }
-
-//     // Read stored text from storedText.txt
-//     let textData = await fs.readFile("D:/jyot/jyot-portfolio/public/maynasundari.txt", "utf-8");
-    
-//     const maxLength = 3000; // Adjust as needed
-//     textData = textData.substring(0, maxLength);
-//     // Send the text + question to OpenAI
-//     const response = await openai.chat.completions.create({
-//       model: "gpt-3.5-turbo",
-//       messages: [
-//         { role: "system", content: "You are an AI assistant that answers questions based on the provided Language text. Detect the language and answer in the detected language itself." },
-//         { role: "user", content: `Text data:\n${textData}\n\nQuestion: ${question}` }
-//       ],
-//     });
-
-//     res.status(200).json({ answer: response.choices[0].message.content });
-//   } catch (error) {
-//     console.error("OpenAI API error:", error);
-//     res.status(500).json({ error: "Failed to fetch response" });
-//   }
-// }
-
-
 import fs from "fs/promises";
 import { OpenAI } from "openai";
 

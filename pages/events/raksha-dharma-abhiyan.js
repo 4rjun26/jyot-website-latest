@@ -38,7 +38,7 @@ export default function RDA(){
           overflow={'hidden'}
           _hover={{transitionDuration: "0.3s",boxShadow:"dark-lg" }}
         >
-          <Image src={card.image} alt={card.title} _hover={{opacity:"0.5",transform:"scale(1.05)"}} transitionDuration={'0.3s'}  />
+          <Image alt="sample" src={card.image} alt={card.title} _hover={{opacity:"0.5",transform:"scale(1.05)"}} transitionDuration={'0.3s'}  />
         </GridItem>
       ))}
     </Grid>

@@ -12,58 +12,64 @@ export default function AboutJyot() {
         phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/manish-mokshagundam.jpg",
+        name:"Dr. Manish Mokshagundam",
+        title:"(Lead Faculty – NDTV)",
+        phrase:"Such an educational and value based movie should be screened across various educational institutions."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/T.-Chandrashekar.jpg",
+        name:"T. Chandrashekar",
+        title:"(Principal, Oxford B.Ed. College)",
+        phrase:"This movie will ignite your thinking to know yourself and then the evolution will begin."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Dr.-Chenraj-Jain.jpg",
+        name:"Dr. Chenraj Jain",
+        title:"(Chariman, JGI)",
+        phrase:"It’s the universal happiness within that you really need to experience. This movie will appeal youngsters to a great extent."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Nirmal-Surana.jpg",
+        name:"Nirmal Surana",
+        title:"(Karnataka State Secretary – BJP)",
+        phrase:"Working with team JYOT has taken my confidence to the next level."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Rajesh-Khatri.jpg",
+        name:"Rajesh Khatri",
+        title:"(Actor)",
+        phrase:"For me “Ek Cheez…” has been a beautiful Experience, Soul Stirring, Mind Boggling, Heart Touching. Overall Brilliant. Wonderful !!"
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Rahul-Kapoor-Jain.jpg",
+        name:"Rahul Kapoor Jain",
+        title:"(Entrepreneur, Speaker and Author)",
+        phrase:"ECMW is a unique initiative to scientifically and logically explain the concept of true, complete and never ending happiness in a form of a movie."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Nimesh-Kampani.jpg",
+        name:"Nimesh Kampani",
+        title:"(Chairman, JM Financial Ltd.)",
+        phrase:"Even an aethist with open mind will start believing in existence of the soul after watching this movie."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Professor-Humpanna.jpg",
+        name:"Professor Humpanna",
+        title:"(Scholar)",
+        phrase:"ECMW is a unique initiative to scientifically and logically explain the concept of true, complete and never ending happiness in a form of a movie."
         },
         {
-        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/narendra-modi.jpg",
-        name:"Narendra Modi",
-        title:"(Prime Minister, India)",
-        phrase:"I appreciate Team JYOT & Pandit Maharaja,for connecting our faith and traditions with knowledge stream which enlightens the true journey of life. (on Jyot Exhibit)."
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Sheetal-Shah.jpg",
+        name:"Sheetal Shah",
+        title:"(Mrs. Gujrati, Bangalore)",
+        phrase:"It’s a real good eye opener for everyone. The message should spread across the globe."
+        },
+        {
+        imgSrc:"https://jyot.in/wp-content/uploads/2022/09/Gautam-Shah.jpg",
+        name:"Gautam Shah",
+        title:"(Film Distributor)",
+        phrase:"Hats off to the man, whose brain has gone into conceptualising this movie. This movie deserves an Oscar."
         },
     ]
 
@@ -102,7 +108,7 @@ Jyot is a magnanimous effort to create a spiritual revolution within the next ge
                 </Flex>
   <SimpleGrid p={4} columns={{ base: 1, sm: 1, lg:3 }} spacing={4}>
         <Box h={'200px'}>
-            <Image 
+            <Image alt="sample" 
             src="https://jyot.in/wp-content/uploads/2022/09/Jyot-Icon-Universal-Truth.gif" 
             w={'full'}
             h={'full'}
@@ -110,7 +116,7 @@ Jyot is a magnanimous effort to create a spiritual revolution within the next ge
             />
         </Box>
         <Box h={'200px'}>
-        <Image 
+        <Image alt="sample" 
             src="https://jyot.in/wp-content/uploads/2022/09/Jyot-Icon-Justice.gif" 
             w={'full'}
             h={'full'}
@@ -118,7 +124,7 @@ Jyot is a magnanimous effort to create a spiritual revolution within the next ge
             />
 </Box>
 <Box h={'200px'}>
-<Image 
+<Image alt="sample" 
             src="https://jyot.in/wp-content/uploads/2022/09/Jyot-Icon-Right-to-Live.gif" 
             w={'full'}
             h={'full'}
@@ -151,7 +157,7 @@ We welcome you to be a part of Jyot community and make an effort to enlighten �
       <SimpleGrid p={4} columns={{ base: 1, sm: 1, lg:2 }} spacing={4}>
         <Box>
         <Box p={'20px'} m={'auto'}>
-            <Image m={'auto'} src="https://jyot.in/wp-content/uploads/2022/09/eye.png" />
+            <Image alt="sample" m={'auto'} src="https://jyot.in/wp-content/uploads/2022/09/eye.png" />
         </Box>
         <Text fontWeight={'bold'} fontSize={'3xl'} fontFamily={'Oswald, sans-serif'} w={'full'} textAlign={'center'}>VISION</Text>
         <Text p={'0px 100px'} fontSize={'md'} w={'full'} textAlign={'center'}>
@@ -162,7 +168,7 @@ We welcome you to be a part of Jyot community and make an effort to enlighten �
 
         <Box p={'20px'}>
         <Box p={'20px'} m={'auto'}>
-            <Image m={'auto'} src="https://jyot.in/wp-content/uploads/2022/09/mission-1.png" />
+            <Image alt="sample" m={'auto'} src="https://jyot.in/wp-content/uploads/2022/09/mission-1.png" />
         </Box>
         <Text fontWeight={'bold'} fontSize={'3xl'} fontFamily={'Oswald, sans-serif'} w={'full'} textAlign={'center'}>MISSION</Text>
         <Text p={'0px 100px'} fontSize={'md'} w={'full'} textAlign={'center'}>
@@ -189,11 +195,11 @@ We welcome you to be a part of Jyot community and make an effort to enlighten �
 
 <Box key={index} border={'1px solid lightgray'} p={'4'} borderRadius={'10px'} transitionDuration={'0.3s'} _hover={{boxShadow:"lg"}}>
 <Box p={'10px'} m={'auto'}>
-    <Image m={'auto'} src={ar.imgSrc} />
+    <Image alt="sample" m={'auto'} src={ar.imgSrc} />
 </Box>
 <Text fontSize={'3xl'} fontFamily={'Oswald, sans-serif'} w={'full'} textAlign={'center'}>{ar.name}</Text>
 <Text fontSize={'lg'} mb={'5px'} fontWeight={'bold'} color={'gray'} w={'full'} textAlign={'center'}>{ar.title}</Text>
-<Text fontSize={'17.5px'} color={'gray'} w={'full'} textAlign={'center'}>
+<Text fontSize={'16.5px'} color={'gray'} w={'full'} textAlign={'center'}>
 {ar.phrase}
 </Text>
 

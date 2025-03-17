@@ -10,7 +10,7 @@ import {  InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
-    <Box w="100%" h="1000px" bg="#1f2125" color="white">
+    <Box w="100%" bg="#1f2125" color="white">
       {/* Flex to divide Footer into two halves */}
       <Box h="50%" display="flex" alignItems="center" justifyContent="center">
         {/* Grid with 3 columns on large screens, 1 on small */}

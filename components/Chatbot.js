@@ -171,7 +171,7 @@ export default function Chatbot() {
           <DrawerHeader>
           <Flex p={'10px'} alignItems={'center'} gap={'10px'} justifyContent={'left'} w={'full'} bg='white' borderBottom={'1px solid gray'}>
 <Box w={'40px'} h={'100%'}>
-             <Image src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
+             <Image alt="sample" src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
             </Box>
   <Text fontWeight={'bold'} fontSize={'2xl'} color={'black'} fontFamily={'Oswald, sans-serif'} >JYOT BOT</Text>
 </Flex>
