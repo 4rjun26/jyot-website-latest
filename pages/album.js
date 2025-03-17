@@ -3,7 +3,7 @@ import { Box, SimpleGrid, Card, CardBody, Image, Text, Link } from "@chakra-ui/r
 // import SoundPlayer from "../components/SoundPlayer";
 // import MusicPlayer from "../components/MusicPlayer";
 import SoundPlayer from "@/components/index_page_components/SoundPlayer";
-import MusicPlayer from "@/components/MusicPlayer";
+
 
 const podcasts = [
   { title: "Song 1", imgSrc: "/song1.jpg", soundSrc: "/sample_sound_1.mp3" },
