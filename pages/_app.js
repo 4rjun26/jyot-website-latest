@@ -1,5 +1,6 @@
 'use client'
 import "@/styles/globals.css";
+import Head from "next/head";
 import { ChakraProvider, Show, Hide, Box } from "@chakra-ui/react";
 import Footer from "@/components/index_page_components/Footer";
 import Chatbot from "@/components/Chatbot";
@@ -34,6 +35,15 @@ export default function App({ Component, pageProps }) {
   }, [router]);
   return (
     <>
+    <Head>
+          <title>Jyot India</title>
+          <meta name="description" content="Jyot official webiste" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+        </Head>
      <LoadingBar color="#f11946" progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ChakraProvider>
       {/* Show MobileNavbar only on small screens */}
