@@ -23,7 +23,7 @@ const fetchPosts = async (currentPage, currentCategory) => {
       },
   });
     const data = await res.json();
-    setReleases(data.posts);
+    setReleases(data.podcasts_array);
    
   } catch (error) {
     console.error("Error fetching posts:", error);

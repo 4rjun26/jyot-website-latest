@@ -12,9 +12,9 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-  if (authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
-    return res.status(403).json({ error: "Forbidden: Invalid API Key" });
-  }
+  // if (authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
+  //   return res.status(403).json({ error: "Forbidden: Invalid API Key" });
+  // }
   try {
     // Connect to MongoDB
     await connectToDatabase();
@@ -30,6 +30,7 @@ export default async function handler(req, res) {
           slug: category_slug, 
           content_type: { $in: ["category"] }
       });
+      
     // Find posts matching the category name (case-insensitive)
     const posts = await Post.find({
         category_name: { $in: [new RegExp(category.title, "i")] } // ✅ Works for arrays
@@ -42,11 +43,14 @@ export default async function handler(req, res) {
       // Remove the extra post from the response
       if (hasMore) posts.pop();
 
-        const op={
-          category_title:category.title,
-          posts:posts,
-          hasMore:hasMore
-        }
+      const op={
+        title:category.title,
+        desc:category.desc,
+        img:category.img,
+        publish_date:category.publish_date,
+        podcasts_array:posts,
+        hasMore:hasMore
+      }
 
 
 

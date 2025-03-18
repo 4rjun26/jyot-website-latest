@@ -4,7 +4,7 @@ import Category from "@/models/Category";
 import Topic from "@/models/Topic";
 
 export default async function handler(req, res) {
-    let { category_slug = "",post_slug="" } = req.query;
+    let { category_slug = "aakhir-kyon-",post_slug="trustees-are-not-shayyatars" } = req.query;
     const { authorization } = req.headers;
     //   const skip = (page - 1) * limit; 
 

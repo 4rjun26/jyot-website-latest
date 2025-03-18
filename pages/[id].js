@@ -8,7 +8,6 @@ const CategoryPage = () => {
 
   return(
     <>
-        <CategoriesCarousel category={id} />
         <CategoriesVideosList category={id} />
     </>
   );

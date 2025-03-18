@@ -7,7 +7,7 @@ const PodcastCard = ({imgSrc,title,slug,published_date}) => {
 
     return(
         <>
-           <Link href={`/podcast/${slug}`}><Card borderRadius={'0px'} maxW='sm' transitionDuration="0.3s" cursor={"pointer"} _hover={{boxShadow:"dark-lg"}}>
+           <Link href={`/${slug}`}><Card borderRadius={'0px'} maxW='sm' transitionDuration="0.3s" cursor={"pointer"} _hover={{boxShadow:"dark-lg"}}>
   <CardBody borderRadius={'0px'}>
     <Image alt="sample"
       src={imgSrc}
