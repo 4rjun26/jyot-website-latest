@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, GridItem, Text, Image } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Text, Image,SimpleGrid } from "@chakra-ui/react";
 
 const cards = [
   { id: 1, title: "Card 1", image: "https://jyot.in/wp-content/uploads/2022/07/shatrunjay-adinath-mahima-mahotsav-4-1024x1024.jpg", colSpan: 2, rowSpan: 1 },
@@ -16,32 +16,24 @@ const cards = [
 export default function SAMM(){
     return(
         <>
-         <Grid 
-      templateColumns="repeat(3, 1fr)" 
-      gap={4} 
-      m={'10px'}
-      w="100%" 
-      maxW="1200px" 
-      mx="auto"
-      templateRows="repeat(3, auto)"
-    >
-      {cards.map((card,index) => (
-        <GridItem 
-        key={index}
-        //   colSpan={card.colSpan} 
-        //   rowSpan={card.rowSpan} 
-        //   bg="purple.200" 
-        w={'fit-content'}
-        h={'fit-content'}
-          borderRadius="0px"
-          bg={'black'}
-          overflow={'hidden'}
-          _hover={{transitionDuration: "0.3s",boxShadow:"dark-lg" }}
-        >
-          <Image alt="sample" src={card.image} alt={card.title} _hover={{opacity:"0.5",transform:"scale(1.05)"}} transitionDuration={'0.3s'}  />
-        </GridItem>
-      ))}
-    </Grid>
+       <SimpleGrid 
+             p={'30px'}
+             columns={{ base: 1, sm: 2, md: 3, lg: 4 }} // Responsive column count
+             spacing={4} // Space between items
+             justifyContent="center"
+           >
+             {cards.map((card) => (
+               <Box key={card.id} overflow="hidden" borderRadius="8px">
+                 <Image 
+                   src={card.image} 
+                   alt={card.title} 
+                   objectFit="contain" // Ensures image fits without cropping
+                   width="100%" 
+                   height="auto" // Maintains aspect ratio
+                 />
+               </Box>
+             ))}
+           </SimpleGrid>
         </>
     );
 }

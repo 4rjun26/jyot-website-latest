@@ -34,10 +34,9 @@ export default async function handler(req, res) {
     const posts = await Post.find({
         category_name: { $in: [new RegExp(category.title, "i")] } // ✅ Works for arrays
       })
+      .sort({publish_date:-1})
       .skip(skip) // Pagination
-      .limit(extraLimit)
-      .select("title img slug publish_date category_name"); // Select only required fields
-
+      .limit(extraLimit);
       const hasMore = posts.length > limit; // More posts exist if length > limit
 
       // Remove the extra post from the response

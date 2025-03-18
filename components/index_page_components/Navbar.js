@@ -163,7 +163,7 @@ const Navbar = () => {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                href="/events/shatrunjay-adinath-mahima-mahotsav"
+                href="/shatrunjay-adinath-mahima-mahotsav"
               >
                 <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
             color="black"
@@ -175,7 +175,7 @@ const Navbar = () => {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                href="/events/raksha-dharma-abhiyan/"
+                href="/raksha-dharma-abhiyan/"
               >
                 <Text textTransform={"uppercase"}  fontFamily={"Oswald, sans-serif"}
             color="black"

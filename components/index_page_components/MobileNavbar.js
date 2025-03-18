@@ -130,10 +130,10 @@ const MobileNavbar = () => {
              <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="https://saveshikharji.com/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
               Save shikharji
              </Link>
-             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/events/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer" display={'block'} textTransform={"uppercase"} href="/shatrunjay-adinath-mahima-mahotsav" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                shatrunjay adinath mahima mahotsav
              </Link>
-             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/events/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <Link  onClick={onClose} className={styles.nextlink} target="_blank" rel="noopener noreferrer"  display={'block'} textTransform={"uppercase"} href="/raksha-dharma-abhiyan/" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                raksha dharma abhiyan
              </Link>
             </VStack>

@@ -79,7 +79,7 @@ const CategoriesVideosList = ({category})=>{
                             <Link href={`/${category}/${post.slug}`}><Image alt="sample" borderRadius={'15px 15px 0px 0px'} src={post.img} w={'full'} _hover={{boxShadow:"dark-lg"}} h={'full'} objectFit={'cover'} transitionDuration={'0.3s'} /></Link>
                         </Box>
                         <Box p={'5px'} w={'full'} h={'30%'}>
-                            <Text fontSize={'large'} fontFamily={'Oswald, sans-serif'}>{post.title}</Text>
+                            <Text fontSize={'large'} fontFamily={'Oswald, sans-serif'}>{post.title!="null" ? post.title : `Ep ${post.ep} - ${post.category_name[0]}`}</Text>
                             
                             <Text border={'2px solid orange'} w={'fit-content'} p={'3px 10px'} borderRadius={'10px'} display={'flex'} gap={'5px'} alignItems={'center'} mt={'5px'} fontSize={'sm'} fontFamily={'Oswald, sans-serif'}><MdCalendarMonth /> 
                            {post.publish_date != null

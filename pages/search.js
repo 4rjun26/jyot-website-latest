@@ -8,9 +8,10 @@ import Link from "next/link";
 import { BsChevronDoubleRight } from "react-icons/bs";
 import PodcastCards from "@/components/index_page_components/PodcastCards";
 import YTCards from "@/components/index_page_components/YTCards";
+import { useRouter } from "next/router";
 
 export default function SearchPage(){
-
+const router=useRouter();
     const searchParams = useSearchParams();
   const searchValue = searchParams.get("s"); 
     const [searchCategories,setSearchCategories]=useState([]);
@@ -145,6 +146,29 @@ export default function SearchPage(){
             // setisLoading(false);
           }
       };
+
+
+      
+    const changePageToVideo = async (categoryName,videoSlug)=>{
+      try {
+          const response = await fetch(`/api/get_slug_from_title?categoryName=${categoryName}`, {
+            headers: {
+                "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+            },
+        }); // ✅ Fetch paginated data
+          if (!response.ok) throw new Error("Failed to fetch podcasts");
+    
+          const data = await response.json();
+          if (data.length > 0){
+          router.push(`/${data[0].slug}/${videoSlug}`);
+              
+          }
+      } catch (error) {
+          console.error("Error fetching podcasts:", error);
+        } finally {
+          // setisLoading(false);
+        }
+    };
     return(
         <>
          <br />
@@ -335,7 +359,6 @@ export default function SearchPage(){
                    
                     {/* Image Box */}
                     <Box w="100%" h="70%" bg={'black'} overflow={"hidden"}>
-                        <Link href={`/watch/${post.slug}`}>
                       <Image alt="sample"
                         src={post.img}
                         w={"100%"}
@@ -345,12 +368,19 @@ export default function SearchPage(){
                         borderRadius={'5px'}
                         transitionDuration={'0.3s'}
                         _hover={{ transform: "scale(1.05)",opacity:"0.5" }}
+                        onClick={()=>{changePageToVideo(post.category_name[0],post.slug)}}
                       />
-                      </Link>
                     </Box>
                     <Flex mt={'10px'} w={'full'} h={'15%'}>
                     <Text fontSize={'lg'} noOfLines={2} fontFamily={'Oswald, sans-serif'}>{post.title}</Text>
                     </Flex>
+                    {post.category_name[0]!=null ?
+                                            <Flex gap={'10px'} w={'full'} pt={'5px'}>   
+                                            <Tag cursor={'pointer'} onClick={()=>{changePage(post.category_name[0])}} colorScheme="orange">{post.category_name[0]}</Tag>
+                                            </Flex>
+                                            :
+                                            <></>  
+                                            }
                   </CardBody>
                 </Card>
                         </>
