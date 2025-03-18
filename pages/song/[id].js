@@ -79,7 +79,13 @@ const SongPage = () => {
         {podcast_metadate.title}
         </Text>
         <Text color="white">
-        By <Link href="#" color="orange" fontWeight={'bold'}>jyotadmin</Link> / {podcast_metadate.publish_date!=null ? podcast_metadate.publish_date.substring(0,10) : ""}
+        By <Link href="#" color="orange" fontWeight={'bold'}>jyotadmin</Link> / {podcast_metadate.publish_date != null
+            ? new Date(podcast_metadate.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
         </Text>
       </Flex>
       </>

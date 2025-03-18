@@ -5,7 +5,7 @@ import { Skeleton } from "@chakra-ui/react";
 
 export default function Songs(){
   const [podcasts, setPodcasts] = useState([]);
-  const ar=[1,2,3,4,5,6,7,8,9,10,11,12];
+  const ar=[1,2,3,4,5,6,7,8];
   const [isLoading, setisLoading] = useState(true);
   const [page, setPage] = useState(1); // ✅ Track the current page
   const [hasMore, setHasMore] = useState(true);
@@ -13,7 +13,7 @@ export default function Songs(){
   const fetchPodcasts = async (pageNum) => {
     try {
       setisLoading(true);
-      const response = await fetch(`/api/get_song_albums?page=${pageNum}&limit=12`, {
+      const response = await fetch(`/api/get_song_albums?page=${pageNum}&limit=8`, {
         headers: {
             "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
         },
@@ -21,9 +21,14 @@ export default function Songs(){
       if (!response.ok) throw new Error("Failed to fetch podcasts");
 
       const data = await response.json();
-      if (data.length === 0) setHasMore(false); // ✅ Stop loading if no more data
-        
-      setPodcasts((prev) => [...prev, ...data]); // ✅ Append new data
+      if (data.length === 0){ 
+        setHasMore(false); // ✅ Stop loading if no more data
+      }
+      else{
+        setPodcasts(data.posts); // ✅ Append new data
+      setPage((prev) => prev + 1);
+      setHasMore(data.hasMore);
+      } 
     } catch (error) {
       console.error("Error fetching podcasts:", error);
     } finally {
@@ -31,16 +36,38 @@ export default function Songs(){
     }
   };
 
-  const loadMore = () => {
+  const loadMore = async (pageNum) => {
     if (!isLoading && hasMore) {
-      setPage((prev) => prev + 1);
-     }
+      try {
+        setisLoading(true);
+        const response = await fetch(`/api/get_podcast_albums?page=${pageNum}&limit=8`, {
+          headers: {
+              "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+          },
+      }); // ✅ Fetch paginated data
+        if (!response.ok) throw new Error("Failed to fetch podcasts");
+  
+        const data = await response.json();
+        if (data.length === 0){ 
+          setHasMore(false); // ✅ Stop loading if no more data
+        }
+        else{
+        setPodcasts((prev) => [...prev, ...data.posts]); // ✅ Append new data
+        setPage((prev) => prev + 1);
+        setHasMore(data.hasMore);
+        } 
+      } catch (error) {
+        console.error("Error fetching podcasts:", error);
+      } finally {
+        setisLoading(false);
+      }
+    }
   };
 
 
   useEffect(() => {
-    fetchPodcasts(page); 
-  }, [page]); 
+    fetchPodcasts(1); 
+  }, []); ; 
 
     return(
         <>
@@ -68,8 +95,12 @@ export default function Songs(){
             )}
               </SimpleGrid>
               </Box>
-            <Box onClick={loadMore} disabled={isLoading} w={'full'} textAlign={'center'}>
-            <Button colorScheme="orange" m={'20px auto'}>Load more</Button>
+              <Box  disabled={isLoading} w={'full'} textAlign={'center'}>
+            {hasMore ? (
+            <Button onClick={()=>{loadMore(page)}} colorScheme="orange" m={'20px auto'}>Load more</Button>
+          ) : (
+              <></>
+          )}
             </Box>
         
         </>

@@ -47,7 +47,7 @@ export default function SearchPage(){
       setSearchShorts([]);
       setSearchVideos([]);
 
-      const response = await fetch(`/api/bruh?searchValue=${searchValue}`, {
+      const response = await fetch(`/api/get_search_results?searchValue=${searchValue}`, {
         headers: {
             "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
         },
@@ -167,12 +167,16 @@ export default function SearchPage(){
         <>
             <Flex alignItems={'start'} overflowY={'hidden'} overflowX={'auto'} gap={'15px'} p={3} w={'full'}  maxW={'900px'} m={'auto'} justifyContent={'center'}>
             {(searchCategories.length > 4 ?  searchCategories.slice(0,showCategories) : searchCategories).map((value, index) => (
-  <Flex key={index} direction="column" align="center" w="90px">
+  <Link href={`/${value.slug}`}>
+ <Flex key={index} direction="column" align="center" w="90px">
+   
     <Avatar size="md" src={value.img} />
     <Box w="full" textAlign="center" mt={2}>
       <Text fontSize="sm" fontWeight="bold" noOfLines={4}>{value.title}</Text>
     </Box>
   </Flex>
+  
+  </Link>
 ))}
         </Flex>
 
@@ -181,7 +185,7 @@ export default function SearchPage(){
             }
             {/* <br /><br /> */}
              {/* Topics */}
-             {searchTopics.length>0 ? 
+             {/* {searchTopics.length>0 ? 
         <Flex  justifyContent={'center'} pb={2} w={'full'} maxW={'900px'} m={'auto'}  >
             <Text mt={'20px'} mb={'10px'} pb={'10px'} fontSize={'2xl'}  fontFamily={'Oswald, sans-serif'}  borderBottom={'5px solid brown'} w={'fit-content'}>Topics</Text>
         </Flex>
@@ -207,7 +211,7 @@ export default function SearchPage(){
         </Flex>
          {showTopics<=4 && searchTopics.length>4 ? <Box w={'full'} textAlign={'center'}><Button _hover={{transform:"translateY(-10px)"}} variant={'outline'} colorScheme={'orange'} onClick={() => setShowTopics(searchTopics.length)} size={'sm'} rightIcon={<BsChevronDoubleRight />}>View all</Button></Box> : <></>}
       </>
-            }
+            } */}
              {/* <br /><br /> */}
 
             {/*Podcasts  */}

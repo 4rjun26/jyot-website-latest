@@ -16,6 +16,15 @@ import {
   AccordionIcon,
 } from '@chakra-ui/react'
 
+
+import { SiYoutubeshorts } from "react-icons/si";
+import { BsYoutube } from "react-icons/bs";
+import { MdLocalMovies } from "react-icons/md";
+import { MdPodcasts } from "react-icons/md";
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import { MdArticle } from "react-icons/md";
+import { BsTwitterX } from "react-icons/bs";
+
 const MobileNavbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
  const router = useRouter();
@@ -50,7 +59,9 @@ const MobileNavbar = () => {
       >
         {/* Logo */}
         <Box mr={'auto'}>
+          <Link href={'/'}>
           <Image src="/jyot_logo.png" alt="Logo" h="50px" />
+          </Link>
         </Box>
 
         {/* Hamburger Menu */}
@@ -134,9 +145,36 @@ const MobileNavbar = () => {
     </AccordionPanel>
   </AccordionItem>
   </Accordion>
-                <Link  onClick={onClose} className={styles.nextlink} textTransform={"uppercase"} href="/watch" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-                        Watch
-                        </Link>
+
+  <Accordion allowMultiple w={'full'}>
+  <AccordionItem>
+    <h2>
+      <AccordionButton textTransform={"uppercase"}  href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" p={'5px 0px'} w={'100%'}>
+        <Box as='span' flex={'1'}>
+          Watch
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+    <VStack spacing={4} align="start">
+       <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/shorts" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+            <SiYoutubeshorts size={20} />
+              Shorts
+                </Link>
+                <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/videos" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+               <BsYoutube size={20} />
+                  Videos
+                </Link>
+                <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/movies" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+              <MdLocalMovies size={20} />
+                  Movies
+                </Link>
+    </VStack>
+
+    </AccordionPanel>
+  </AccordionItem>
+  </Accordion>
                         
             <Accordion allowMultiple w={'full'}>
   <AccordionItem>
@@ -151,9 +189,11 @@ const MobileNavbar = () => {
     <AccordionPanel pb={4}>
     <VStack spacing={4} align="start">
        <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+          <MdPodcasts size={20} />
               Podcast
                 </Link>
                 <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                <BsMusicNoteBeamed size={20} />
                   Song
                 </Link>
     </VStack>
@@ -174,9 +214,11 @@ const MobileNavbar = () => {
     <AccordionPanel pb={4}>
     <VStack spacing={4} align="start">
        <Link  onClick={onClose} className={styles.nextlink} display={'block'} textTransform={"uppercase"} href="/article" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+             <MdArticle size={20} />
               Article
                 </Link>
                 <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/tweet" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+                <BsTwitterX size={20} />
                   Tweet
                 </Link>
     </VStack>

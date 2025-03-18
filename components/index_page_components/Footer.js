@@ -1,14 +1,55 @@
 import React from "react";
-import { Box, SimpleGrid, Card, CardBody, Text,Button,Flex } from "@chakra-ui/react";
+import { Box, SimpleGrid, Card, CardBody, Text,Button,Flex,Image, Skeleton,Tag } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 import { BiLogoFacebook } from "react-icons/bi";
 import { BsTwitterX } from "react-icons/bs";
 import { BiLogoInstagram } from "react-icons/bi";
+import { useState,useEffect } from "react";
 import { BsYoutube } from "react-icons/bs";
 import {  InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 const Footer = () => {
+    const [searchValue, setSearchValue] = useState("");
+    const [data, setData] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
+        const router = useRouter();
+    
+    const handleSearch = () => {
+      if (searchValue.trim()) {
+        router.push(`/search?s=${encodeURIComponent(searchValue)}`);
+        setSearchValue("");
+      }
+    };
+
+    const fetchData = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(`/api/get_latest_post`, {
+          headers: {
+              "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+          },
+      }); // ✅ Fetch paginated data
+        if (!response.ok) throw new Error("Failed to fetch podcasts");
+  
+        const data = await response.json();
+        if (data.length === 0){ 
+        //  setHasMore(false); // ✅ Stop loading if no more data
+        }
+        else{
+          setData(data[0]); 
+        } 
+      } catch (error) {
+        console.error("Error fetching podcasts:", error);
+      } finally {
+        setisLoading(false);
+      }
+    };
+
+    useEffect(() => {
+      fetchData(); 
+    }, []); 
   return (
     <Box w="100%" bg="#1f2125" color="white">
       {/* Flex to divide Footer into two halves */}
@@ -24,9 +65,26 @@ const Footer = () => {
               p={4}
             >
               <CardBody>
-              <Text textTransform={'uppercase'} color={'white'} mb={'10px'} fontSize={'25px'} fontFamily={'Oswald, sans-serif'} >Ep 1 - Tirthraksha ka bhishma sankalp - Shikharji
+              <Text textTransform={'uppercase'} color={'white'} mb={'10px'} fontSize={'25px'} fontFamily={'Oswald, sans-serif'} >
+                Latest Release
               </Text>
               <Divider border={'2px solid white'} />
+              {isLoading ? <><Skeleton w={'full'} h={'250px'} /></> :
+              <>
+              <Box w={'full'}>
+                <Image 
+                  src={data.img}
+                  w={'full'}
+                  h={'auto'}
+                  objectFit={'contain'}
+                />
+              </Box>
+              <Text textTransform={'uppercase'} color={'white'} mb={'10px'} fontSize={'15px'} fontFamily={'Oswald, sans-serif'} >
+                {data.title}
+              </Text>
+              <Tag colorScheme="orange">{data.category_name[0]}</Tag>
+              </>
+              }
               </CardBody>
             </Card>
             
@@ -45,12 +103,16 @@ const Footer = () => {
             bg="gray"
             fontWeight="bold"
             border={'none'}
-            type="text"
+             type="search"
             borderRadius="0px"
             outline="none"
             color="white"
             placeholder="Search..."
             _placeholder={{color:"darkgray"}}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Trigger search on Enter key
+
           />
 
             <Button
@@ -61,6 +123,7 @@ const Footer = () => {
               w={'150px'}
               h={'40px'}
               padding={'12px'}
+              onClick={handleSearch}
             >
             SEARCH
             </Button>

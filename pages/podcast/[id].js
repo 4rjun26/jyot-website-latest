@@ -90,7 +90,13 @@ const PodcastPage = () => {
         {podcast_metadate.title}
         </Text>
         <Text>
-         {podcast_metadate.publish_date!=null ? podcast_metadate.publish_date.substring(0,10) : ""}
+         {podcast_metadate.publish_date != null
+            ? new Date(podcast_metadate.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
         </Text>
       </Flex>
 

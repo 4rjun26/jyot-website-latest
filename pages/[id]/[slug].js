@@ -1,7 +1,7 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
-import { Box,Text,Divider } from "@chakra-ui/react";
+import { Box,Text,Divider,Image,Flex,Tag } from "@chakra-ui/react";
 import Link from "next/link";
 import CategoriesCarousel from "@/components/category_page_components/CategoriesCarousel";
 const VideoPage = ()=>{
@@ -33,7 +33,7 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
     
             const data = await response.json();
             
-            setVideo(data.link); 
+            setVideo(data.info); 
             setDesc(data.desc); 
             setRelated(data.related_posts);
 
@@ -52,6 +52,7 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
         <>
         {/* <CategoriesCarousel /> */}
         {video ? 
+        <>
         <Box
           w="100%" 
           maxW="774px" 
@@ -67,7 +68,7 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
           <iframe
             width="100%"
             height="400px"
-            src={video.includes("watch?v=") ? video.replace("watch?v=", "embed/") : video}
+            src={video.link.includes("watch?v=") ? video.link.replace("watch?v=", "embed/") : video}
             title="Updhaan Tapasvi Varghoda @ GSP Bangalore #jainsim #short #shortsvideo"
             frameBorder="0"
             sandbox="allow-scripts allow-same-origin allow-presentation" 
@@ -75,7 +76,36 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
+          
         </Box>
+        <Flex
+                          align="start" // Align items to the start (left-aligned)
+                          justify="end" // Push content to the bottom
+                          w={'full'}
+                          maxW={'800px'}
+                          m={'auto'}
+                          mb={'30px'}
+                          flexDirection="column" 
+                          p={2}
+                        >
+                          <Flex w={'full'} gap={'10px'}>
+                        {video.category_name?.map((category, index) => (
+                          <Tag bg={'orange'} fontFamily={'Oswald, sans-serif'} color={'white'}>{category}</Tag>
+                        ))}
+                        </Flex>
+                          <Text textAlign={'left'} fontSize="30px" fontFamily={'Oswald, sans-serif'} textTransform={'uppercase'}>
+                          {video.title}
+                          </Text>
+                          <Text>
+                          {video.publish_date != null
+            ? new Date(video.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}                </Text>
+                        </Flex>
+        </>
 :
 <></>
 }
@@ -87,14 +117,30 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
                 <Text fontFamily={'Oswald, sans-serif'} fontSize={'3xl'} >YOU MAY ALSO LIKE</Text>
                 <Divider mt={'5px'} mb={'5px'} />
                 {related.map((re,index)=>(
-                    <Box key={index} padding={'10px 5px'}>
+                     <Box key={index} padding={'10px 5px'}>
+                                          <Box w={'100px'} h={'auto'}>
+                                              <Image 
+                                                src={re.img}
+                                                w={'full'}
+                                                h={'auto'}
+                                                objectFit={'contain'}
+                                              />
+                                          </Box>
+                                          <Box>
                 <Text fontFamily={'Oswald, sans-serif'} fontSize={'md'} color={'gray'} textTransform={'uppercase'} _hover={{color:"orange"}}>
                     <Link href={`/${category}/${re.slug}`}>{re.title}</Link>
                     </Text>
-                <Text fontFamily={'Oswald, sans-serif'} fontSize={'sm'} color={'gray'} textTransform={'uppercase'}>by <Link href={'#'} fontWeight={'bold'}>Jyot</Link></Text>
-                <Text fontFamily={'Oswald, sans-serif'} fontSize={'xs'} color={'gray'} textTransform={'uppercase'}>{re.publish_date.substring(0,10)}</Text>
+                <Text fontFamily={'Oswald, sans-serif'} fontSize={'xs'} color={'gray'} textTransform={'uppercase'}>{re.publish_date != null
+            ? new Date(re.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}</Text>
                 <Divider mt={'5px'} mb={'5px'} />
-                    </Box>      
+                   </Box>
+                                   <Divider mt={'5px'} mb={'5px'} />
+                                       </Box>     
                 ))}
             </Box>
         

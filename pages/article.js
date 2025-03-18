@@ -45,7 +45,10 @@ export default function ArticlesPage(){
           const data = await response.json();
           if (data.length === 0) setHasMore(false); // ✅ Stop loading if no more data
     
-          setArticles(data); // ✅ Append new data
+          setArticles(data.posts); // ✅ Append new data
+          setPage((prev) => prev + 1);
+          setHasMore(data.hasMore);
+
         } catch (error) {
           console.error("Error fetching podcasts:", error);
         } finally {
@@ -55,7 +58,6 @@ export default function ArticlesPage(){
     
       const loadMore = async (pageNum) => {
         if (!loading && hasMore) {
-          setPage((prev) => prev + 1);
           try {
             setisLoading(true);
             const response = await fetch(`/api/get_all_articles?page=${pageNum}&limit=9`, {
@@ -68,7 +70,10 @@ export default function ArticlesPage(){
             const data = await response.json();
             if (data.length === 0) setHasMore(false); // ✅ Stop loading if no more data
       
-            setArticles((prev) => [...prev, ...data]); // ✅ Append new data
+            setArticles((prev) => [...prev, ...data.posts]); // ✅ Append new data
+            setPage((prev) => prev + 1);
+            setHasMore(data.hasMore);
+
           } catch (error) {
             console.error("Error fetching podcasts:", error);
           } finally {
@@ -136,8 +141,16 @@ export default function ArticlesPage(){
                 }
                 
               </SimpleGrid>
-              <Box p={'10px'} w={'full'} textAlign={'center'}><Button onClick={()=>{loadMore(page)}} colorScheme="orange">Load more</Button></Box>
+              <Box  disabled={loading} w={'full'} textAlign={'center'}>
+            {hasMore ? (
+           <Button onClick={()=>{loadMore(page)}} colorScheme="orange">Load more</Button>
+          ) : (
+            <Text>End of List</Text>
+          )}
             </Box>
+         
+         
+           </Box>
         </>
     );
 }

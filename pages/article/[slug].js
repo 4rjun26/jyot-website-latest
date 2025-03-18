@@ -45,7 +45,7 @@ const fetchPodcasts = async (slug) => {
   
     useEffect(() => {
       fetchPodcasts(slug); 
-    }, []); 
+    }, [slug]); 
 
     return(
         <>
@@ -88,11 +88,26 @@ const fetchPodcasts = async (slug) => {
              <Divider mt={'5px'} mb={'5px'} />
              {related.map((re,index)=>(
                     <Box key={index} padding={'10px 5px'}>
+                      <Box w={'100px'} h={'auto'}>
+                          <Image 
+                            src={re.img}
+                            w={'full'}
+                            h={'auto'}
+                            objectFit={'contain'}
+                          />
+                      </Box>
+                      <Box>
                 <Text fontFamily={'Oswald, sans-serif'} fontSize={'md'} color={'gray'} textTransform={'uppercase'} _hover={{color:"orange"}}>
                     <Link href={`/article/${re.slug}`}>{re.title}</Link>
                     </Text>
-                <Text fontFamily={'Oswald, sans-serif'} fontSize={'sm'} color={'gray'} textTransform={'uppercase'}>by <Link href={'#'} fontWeight={'bold'}>Jyot</Link></Text>
-                <Text fontFamily={'Oswald, sans-serif'} fontSize={'xs'} color={'gray'} textTransform={'uppercase'}>{re.publish_date.substring(0,10)}</Text>
+                <Text fontFamily={'Oswald, sans-serif'} fontSize={'xs'} color={'gray'} textTransform={'uppercase'}>{re.publish_date != null
+            ? new Date(re.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}</Text>
+                </Box>
                 <Divider mt={'5px'} mb={'5px'} />
                     </Box>      
                 ))}

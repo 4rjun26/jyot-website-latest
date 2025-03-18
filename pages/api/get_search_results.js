@@ -4,7 +4,7 @@ import Category from "@/models/Category";
 import Topic from "@/models/Topic";
 
 export default async function handler(req, res) {
-  const { searchValue = "m"} = req.query; // ✅ Get page & limit from query params
+  const { searchValue = ""} = req.query; // ✅ Get page & limit from query params
   const { authorization } = req.headers;
 //   const skip = (page - 1) * limit; 
 
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-  // if (authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
-  //   return res.status(403).json({ error: "Forbidden: Invalid API Key" });
-  // }
+  if (authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
+    return res.status(403).json({ error: "Forbidden: Invalid API Key" });
+  }
   try {
     await connectToDatabase();
     

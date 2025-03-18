@@ -1,82 +1,11 @@
-
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
-// import { Box, IconButton, Flex } from "@chakra-ui/react";
-// import Image from "next/image";
-// import { useState } from "react";
-
-// const images = [3, 4, 1, 2];
-
-// const Carousel = () => {
-//   const [swiperRef, setSwiperRef] = useState(null);
-
-//   return (
-//     <>
-//       <Swiper
-//           spaceBetween={50}
-//           slidesPerView={1}
-//           onSwiper={setSwiperRef}
-//           loop={true}
-//           watchSlidesProgress={true} // Helps Swiper correctly track slides
-//           onInit={(swiper) => {
-//             swiper.update(); // Ensures Swiper recalculates its dimensions correctly
-//           }}
-//       >
-//         {images.map((a, index) => (
-//           <SwiperSlide key={index}>
-//             <Box w="100vw" h={"fit-content"}>
-//               <Image
-//                 alt="sample"
-//                 src={`/c${a}.jpg`}
-//                 width={1000}
-//                 height={1000}
-//                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
-//               />
-//             </Box>
-//           </SwiperSlide>
-//         ))}
-//       </Swiper>
-
-//       <Flex w={"100vw"} justifyContent={"center"}>
-//         <IconButton
-//           fontSize={"30px"}
-//           icon={<BsChevronLeft />}
-//           onClick={() => swiperRef?.slidePrev()}
-//           zIndex="10"
-//           color={"black"}
-//           borderRadius="0px"
-//           colorScheme="orange"
-//           variant={"unstyled"}
-//           transitionDuration={"0.5s"}
-//           _hover={{ transform: "scale(1.5)" }}
-//         />
-
-//         <IconButton
-//           colorScheme="orange"
-//           variant={"unstyled"}
-//           fontSize={"30px"}
-//           icon={<BsChevronRight />}
-//           onClick={() => swiperRef?.slideNext()}
-//           transitionDuration={"0.5s"}
-//           _hover={{ transform: "scale(1.5)" }}
-//           zIndex="10"
-//           color={"black"}
-//           borderRadius="0px"
-//         />
-//       </Flex>
-//     </>
-//   );
-// };
-
-// export default Carousel;
-
 import React, { useState, useEffect } from "react";
 import { Box, IconButton, Flex } from "@chakra-ui/react";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import Link from "next/link";
 import Image from "next/image";
 
 const images = ["/c3.jpg", "/c4.jpg", "/c1.jpg", "/c2.jpg"];
+const slugs=["podcast/abhinandanjin-stavan-anandghanji-chovisi","/podcast/mokshmarg-ni-shrenio","podcast/manushya-bhav-nu-safalya-shema","podcast/jinshasan-no-sar-namaskar-mahamantra"]
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -102,6 +31,7 @@ const Carousel = () => {
       <Box display="flex" transition="transform 0.5s ease-in-out" transform={`translateX(-${currentIndex * 100}%)`}>
         {images.map((src, index) => (
           <Box key={index} flex="0 0 100%" width="100%">
+             <Link href={slugs[index]}>
             <Image
               src={src}
               alt={`Slide ${index + 1}`}
@@ -109,6 +39,7 @@ const Carousel = () => {
               height={500}
               style={{ width: "100%", height: "auto", objectFit: "cover" }}
             />
+            </Link>
           </Box>
         ))}
       </Box>

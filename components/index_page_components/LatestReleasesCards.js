@@ -52,7 +52,13 @@ const LatestReleasesCards = ({releases,loading}) => {
 |
 <Link href="#" passHref>
         <Text as="span" _hover={{ color: "orange" }}>
-        {release.publish_date.substring(0,10)}
+        {release.publish_date != null
+            ? new Date(release.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
         </Text>
       </Link> 
               

@@ -80,11 +80,15 @@ const CategoriesVideosList = ({category})=>{
                         </Box>
                         <Box p={'5px'} w={'full'} h={'30%'}>
                             <Text fontSize={'large'} fontFamily={'Oswald, sans-serif'}>{post.title}</Text>
-                            <Text bg={'orange'} w={'fit-content'} p={'3px 10px'} borderRadius={'10px'} display={'flex'} gap={'5px'} alignItems={'center'} mt={'5px'} fontSize={'md'} fontFamily={'Oswald, sans-serif'}><MdPerson /> 
-                            <Link style={{color:'black'}} color={'black'} href="#">Jyot</Link>
-                            </Text>
+                            
                             <Text border={'2px solid orange'} w={'fit-content'} p={'3px 10px'} borderRadius={'10px'} display={'flex'} gap={'5px'} alignItems={'center'} mt={'5px'} fontSize={'sm'} fontFamily={'Oswald, sans-serif'}><MdCalendarMonth /> 
-                           {post.publish_date.substring(0,10)}
+                           {post.publish_date != null
+            ? new Date(post.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
                             </Text>
                         </Box>
                     </Box>

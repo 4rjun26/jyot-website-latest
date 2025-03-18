@@ -42,7 +42,7 @@ const related = await Post.find({
       
       
      const op={
-        link:posts[0].link,
+        info:posts[0],
         desc:posts[0].desc,
         related_posts:related
      } 

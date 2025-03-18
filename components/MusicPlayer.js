@@ -221,7 +221,7 @@ const MusicPlayer = () => {
     const savedTrack = localStorage.getItem("currentTrack");
     const savedTime = localStorage.getItem("currentTime");
     
-    if (savedTrack) {
+    if (savedTrack && savedTime) {
       setCurrentTrack(savedTrack);
       setIsSlideOpen(localStorage.getItem("isSlideOpen") === "true");
       setCurrentTime(savedTime ? parseFloat(savedTime) : 0);
@@ -265,7 +265,9 @@ const MusicPlayer = () => {
     };
     // ✅ Update duration when metadata loads
     const updateMetadata = () => {
+      if (audioRef.current && audioRef.current.duration != null) {
       setDuration(audioRef.current.duration);
+      }
       if (localStorage.getItem("isPlaying") === "true") {
         setIsPlaying(true);
         // Only play if user has interacted with the page
@@ -277,8 +279,13 @@ const MusicPlayer = () => {
 
     // ✅ Update currentTime on timeupdate
     const updateTime = () => {
+      if (audioRef.current && audioRef.current.currentTime != null) {
       setCurrentTime(audioRef.current.currentTime);
       localStorage.setItem("currentTime", audioRef.current.currentTime.toString());
+      }
+      else{
+        setCurrentTime(0);
+      }
     };
 
     // ✅ Track play/pause state
@@ -540,7 +547,7 @@ playNewPodcastFromPlayList(ind-1);
 <IconButton
   mr={'auto'}
             aria-label="Remove Player"
-            icon={<MdOutlineRemoveCircle size={24} />}
+            icon={<MdOutlineClose size={24} />}
                 colorScheme="red"
                 borderRadius="full"
             onClick={removePlayer}
@@ -623,7 +630,7 @@ playNewPodcastFromPlayList(ind-1);
              <IconButton
              ml={'auto'}
             aria-label="Close Player"
-            icon={<MdOutlineClose size={24} />}
+            icon={<MdOutlineRemoveCircle size={24} />}
                 colorScheme="red"
                 borderRadius="full"
             onClick={OpenAndCloseSlide}

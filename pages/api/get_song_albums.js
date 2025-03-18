@@ -19,6 +19,7 @@ export default async function handler(req, res) {
     // Connect to MongoDB
     await connectToDatabase();
 
+    const extraLimit = Number(limit) + 1;
     // Get count of posts
     const posts = await Category.find(
       { 
@@ -30,8 +31,15 @@ export default async function handler(req, res) {
   // .populate("topic_id") // Populate topic details
    .sort({ publish_date: -1 })
       .skip(skip)
-      .limit(Number(limit));
-    return res.status(200).json(posts);
+      .limit(extraLimit);
+
+
+      const hasMore = posts.length > limit; // More posts exist if length > limit
+
+      // Remove the extra post from the response
+      if (hasMore) posts.pop();
+
+    return res.status(200).json({posts,hasMore});
 
   // const posts=await Post.find({category_id:"672def721f63a0c51a915393"})
   // .limit(10);

@@ -22,12 +22,19 @@ import {
     useDisclosure
   } from '@chakra-ui/react'
   import { Divider } from '@chakra-ui/react'
-
   import {
     Menu,
     MenuButton,
     MenuList,
   } from '@chakra-ui/react'
+  import { SiYoutubeshorts } from "react-icons/si";
+  import { BsYoutube } from "react-icons/bs";
+  import { MdLocalMovies } from "react-icons/md";
+  import { MdPodcasts } from "react-icons/md";
+  import { BsMusicNoteBeamed } from "react-icons/bs";
+  import { MdArticle } from "react-icons/md";
+  import { BsTwitterX } from "react-icons/bs";
+
 
 const Navbar = () => {
     const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure();
@@ -47,8 +54,10 @@ const Navbar = () => {
      <Flex position={'fixed'} zIndex={999} bg={'white'} boxShadow={'md'} borderBottom={'1px solid lightgray'} gap={'25px'} alignItems="center" justifyContent={'right'} w={'100vw'} h={'53px'} pr={'20px'}>
         {/* Logo */}
         <Box mr={'auto'} w={'50px'} h={'100%'}>
+          <Link href={'/'}>
          <Image alt="sample" src='/jyot_logo.png' width={1000} height={1000} style={{width:"100%",height:"auto"}} />
-        </Box>
+         </Link>
+          </Box>
 
         {/* <Chatbot /> */}
 
@@ -64,6 +73,7 @@ const Navbar = () => {
         rightIcon={<BsChevronDown />}
         fontWeight={'light'}
         bg={'none'}
+        mr={'-25px'}
       >
         About
       </MenuButton>
@@ -73,7 +83,7 @@ const Navbar = () => {
             _hover={{ textDecoration: "none", color: "orange" }}>
           <Link
            
-            href="/article"
+            href="/about"
            
           >
             About Jyot
@@ -178,22 +188,46 @@ const Navbar = () => {
         </MenuItem>
       </MenuList>
     </Menu>    
-          <Link className={styles.nextlink} textTransform={"uppercase"} href="/watch" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-          Watch
-          </Link>
+    <Menu>
+  <MenuButton w={'fit-content'} mr={'-25px'} _hover={'none'} as={Button} rightIcon={<BsChevronDown />} bg={'none'} fontWeight={'light'} className={styles.nextlink}>
+    Watch
+  </MenuButton>
+  <MenuList>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/shorts" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <SiYoutubeshorts size={20} />
+    Shorts
+    </Link>
+    </MenuItem>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/videos" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <BsYoutube size={20} />
+    Videos
+    </Link>
+    </MenuItem>
+    <MenuItem>
+    <Link className={styles.nextlink} textTransform={"uppercase"} href="/movies" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <MdLocalMovies size={20} />
+    Movies
+    </Link>
+    </MenuItem>
+  </MenuList>
+</Menu>
 
           <Menu>
   <MenuButton w={'fit-content'} mr={'-25px'} _hover={'none'} as={Button} rightIcon={<BsChevronDown />} bg={'none'} fontWeight={'light'} className={styles.nextlink}>
     Listen
   </MenuButton>
   <MenuList>
-    <MenuItem>
+    <MenuItem >
     <Link className={styles.nextlink} textTransform={"uppercase"} href="/podcast" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <MdPodcasts size={20} />
     Podcast
     </Link>
     </MenuItem>
-    <MenuItem>
+    <MenuItem >
     <Link className={styles.nextlink} textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <BsMusicNoteBeamed size={20} />
     Song
     </Link>
     </MenuItem>
@@ -207,12 +241,14 @@ const Navbar = () => {
   <MenuList shadow={'lg'}>
     <MenuItem>
     <Link className={styles.nextlink} textTransform={"uppercase"} href="/article" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
+    <MdArticle size={20} />
     Article
     </Link>
     </MenuItem>
     <MenuItem>
     <Link className={styles.nextlink} textTransform={"uppercase"} href="/tweet" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
-    Tweet
+    <BsTwitterX size={20} />
+   Tweet
     </Link>
     </MenuItem>
   </MenuList>

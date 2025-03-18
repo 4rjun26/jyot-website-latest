@@ -301,7 +301,13 @@ export default function TweetsPage(){
                     </Box>
                     <Box pt={'10px'}>
                     <Text color={'rgb(100,100,100)'} whiteSpace={'pre-wrap'} fontSize={'sm'}>
-                    {tweet.reply_post.publish_date.substring(0,10)}
+                    {tweet.reply_post.publish_date != null
+            ? new Date(tweet.reply_post.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
                        </Text>
                     </Box>
                     </Box>
@@ -341,7 +347,13 @@ export default function TweetsPage(){
                     </Box>
                     <Box pt={'10px'}>
                     <Text color={'rgb(100,100,100)'} whiteSpace={'pre-wrap'} fontSize={'sm'}>
-                    {tweet.publish_date.substring(0,10)}
+                    {tweet.publish_date != null
+            ? new Date(tweet.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
                        </Text>
                     </Box>
                     </Box>

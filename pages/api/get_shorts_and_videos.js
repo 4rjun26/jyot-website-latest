@@ -29,6 +29,7 @@ export default async function handler(req, res) {
     const posts = await Post.find({
         content_type: { $in: [category_slug] }
       })
+      .sort({ publish_date: -1 })
       .skip(skip) // Pagination
       .limit(limitNumber)
 

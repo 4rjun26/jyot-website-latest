@@ -9,6 +9,7 @@ import MobileNavbar from "@/components/index_page_components/MobileNavbar";
 import MusicPlayer from "@/components/MusicPlayer";
 import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
+import ScrollToTop from "@/components/index_page_components/ScrollToTop";
 import LoadingBar from "react-top-loading-bar";
 
 
@@ -55,12 +56,12 @@ export default function App({ Component, pageProps }) {
       <Hide below="lg">
         <Navbar />
       </Hide>
-
+      <ScrollToTop />
       <Box pt="60px"> {/* Avoid content overlap */}
         {/* <Chatbot /> */}
         <MusicPlayer />
         <Component {...pageProps} />
-        <Footer />
+        {progress < 100 && <Footer />}
       </Box>
     </ChakraProvider>
     </>

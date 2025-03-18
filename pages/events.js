@@ -17,20 +17,20 @@ import { MdChevronLeft } from "react-icons/md";
 export default function EventsPage(){
   const [tabData, setTabData] = useState(() =>
     [...[
-      { label: "Events - 2019", slug: "events-2019", page_no: 1, posts: [] },
-      { label: "Events - 2021", slug: "events-2021", page_no: 1, posts: [] },
-      { label: "Events - 2022", slug: "events-2022", page_no: 1, posts: [] },
-      { label: "Events - 2023", slug: "events-2023", page_no: 1, posts: [] },
-      { label: "Events - 2024", slug: "events-2024", page_no: 1, posts: [] },
-      { label: "Events - Surat", slug: "events-surat", page_no: 1, posts: [] },
-      { label: "Events - Manilaxmi", slug: "events-manilaxmi", page_no: 1, posts: [] },
-      { label: "Events - Ahmedabad", slug: "events-ahmedabad", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2020", slug: "vijay-prasthan-utsav-2020", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2018", slug: "vijay-prasthan-utsav-2018", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2022", slug: "vijay-prasthan-utsav-2022", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2023", slug: "vijay-prasthan-utsav-2023", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2024", slug: "vijay-prasthan-utsav-2024", page_no: 1, posts: [] },
-      { label: "Vijay Prasthan Utsav - 2025", slug: "vijay-prasthan-utsav-2025", page_no: 1, posts: [] },
+      { label: "Events - 2019", slug: "events-2019", page_no: 1, posts: [], hasMore:true },
+      { label: "Events - 2021", slug: "events-2021", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - 2022", slug: "events-2022", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - 2023", slug: "events-2023", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - 2024", slug: "events-2024", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - Surat", slug: "events-surat", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - Manilaxmi", slug: "events-manilaxmi", page_no: 1, posts: [],hasMore:true },
+      { label: "Events - Ahmedabad", slug: "events-ahmedabad", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2020", slug: "vijay-prasthan-utsav-2020", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2018", slug: "vijay-prasthan-utsav-2018", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2022", slug: "vijay-prasthan-utsav-2022", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2023", slug: "vijay-prasthan-utsav-2023", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2024", slug: "vijay-prasthan-utsav-2024", page_no: 1, posts: [],hasMore:true },
+      { label: "Vijay Prasthan Utsav - 2025", slug: "vijay-prasthan-utsav-2025", page_no: 1, posts: [],hasMore:true },
     ]].reverse()
   );
     // const [tabData, setTabData] = useState([
@@ -72,11 +72,13 @@ export default function EventsPage(){
           // Ensure posts are only updated if new data is available
           if (result.posts && result.posts.length > 0) {
             setTabData((prevTabData) =>
-              prevTabData.map((tab, index) =>
-                index === activeTab ? { ...tab, posts: result.posts } : tab
-              )
+                prevTabData.map((tab, index) =>
+                    index === activeTab 
+                        ? { ...tab, posts: result.posts, hasMore: result.hasMore } 
+                        : tab
+                )
             );
-          }
+        }
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
@@ -233,23 +235,6 @@ export default function EventsPage(){
                                 {post.title}
                               </Text>
                               <Text
-                                bg={"orange"}
-                                w={"fit-content"}
-                                p={"3px 10px"}
-                                borderRadius={"10px"}
-                                display={"flex"}
-                                gap={"5px"}
-                                alignItems={"center"}
-                                mt={"5px"}
-                                fontSize={"md"}
-                                fontFamily={"Oswald, sans-serif"}
-                              >
-                                <MdPerson />
-                                <Link style={{ color: "black" }} color={"black"} href="#">
-                                  Jyot
-                                </Link>
-                              </Text>
-                              <Text
                                 border={"2px solid orange"}
                                 w={"fit-content"}
                                 p={"3px 10px"}
@@ -261,16 +246,26 @@ export default function EventsPage(){
                                 fontSize={"sm"}
                                 fontFamily={"Oswald, sans-serif"}
                               >
-                                <MdCalendarMonth /> {post.publish_date.substring(0, 10)}
+                                <MdCalendarMonth /> {post.publish_date != null
+            ? new Date(post.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
                               </Text>
                             </Box>
                           </Box>
                         ))}
                   </SimpleGrid>
                   <Flex justify="center" mt={6}>
+                  {tabData[activeTab].hasMore ? (
                     <Button colorScheme="orange" onClick={handleLoadMore} isLoading={loading} loadingText="Loading...">
                       Load More
                     </Button>
+                  ):
+                  <></>
+                }
                   </Flex>
                 </Box>
               </TabPanel>

@@ -24,6 +24,8 @@ export default async function handler(req, res) {
     const limitNumber = parseInt(limit, 10) || 9;
     const skip = (pageNumber - 1) * limitNumber;
   
+    const extraLimit = Number(limitNumber) + 1;
+  
         const category = await Category.findOne({
           slug: category_slug, 
           content_type: { $in: ["category"] }
@@ -33,12 +35,18 @@ export default async function handler(req, res) {
         category_name: { $in: [new RegExp(category.title, "i")] } // ✅ Works for arrays
       })
       .skip(skip) // Pagination
-      .limit(limitNumber)
+      .limit(extraLimit)
       .select("title img slug publish_date category_name"); // Select only required fields
+
+      const hasMore = posts.length > limit; // More posts exist if length > limit
+
+      // Remove the extra post from the response
+      if (hasMore) posts.pop();
 
         const op={
           category_title:category.title,
-          posts:posts
+          posts:posts,
+          hasMore:hasMore
         }
 
 
