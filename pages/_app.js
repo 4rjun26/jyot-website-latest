@@ -78,7 +78,9 @@ export default function App({ Component, pageProps }) {
       <ScrollToTop />
       <Box pt="60px"> {/* Avoid content overlap */}
         {/* <Chatbot /> */}
+        <Hide below="md">
         <MusicPlayer />
+        </Hide>
         <Component {...pageProps} />
         {/* <div style={{ display: showFooter ? "block" : "none" }}> */}
         <Footer />

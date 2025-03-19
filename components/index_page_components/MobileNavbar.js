@@ -65,9 +65,9 @@ const MobileNavbar = () => {
         </Box>
 
         {/* Hamburger Menu */}
+        <MusicPlayer />
         <CategoryButton />
         {/* <Chatbot /> */}
-        <MusicPlayer />
         <IconButton
           icon={<GiHamburgerMenu />}
           aria-label="Open Menu"

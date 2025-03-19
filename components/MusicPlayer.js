@@ -467,7 +467,7 @@ playNewPodcastFromPlayList(ind-1);
           onClick={OpenAndCloseSlide}
         />
         <Badge
-          zIndex="100"
+          zIndex="101"
           position="fixed"
           fontSize="md"
           w="25px"
@@ -508,6 +508,7 @@ playNewPodcastFromPlayList(ind-1);
             right="-5px"
             fontSize="md"
             w="20px"
+              zIndex="101"
             h="20px"
             display={isSlideOpen ? "none" : "flex"}
             justifyContent="center"
