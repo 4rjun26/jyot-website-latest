@@ -7,7 +7,7 @@ import CategoryButton from "./CategoryButton";
 import Link from "next/link";
 import styles from '@/styles/Home.module.css'
 import { useRouter } from "next/router";
-
+import MusicPlayer from "../MusicPlayer";
 import {
   Accordion,
   AccordionItem,
@@ -67,6 +67,7 @@ const MobileNavbar = () => {
         {/* Hamburger Menu */}
         <CategoryButton />
         {/* <Chatbot /> */}
+        <MusicPlayer />
         <IconButton
           icon={<GiHamburgerMenu />}
           aria-label="Open Menu"

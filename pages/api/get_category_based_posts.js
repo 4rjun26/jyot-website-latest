@@ -4,7 +4,7 @@ import Category from "@/models/Category";
 import Topic from "@/models/Topic";
 
 export default async function handler(req, res) {
-    const { category_slug = "", page = 1, limit = 3 } = req.query;
+    const { category_slug = "", page = 1, limit = 3,current_content_type="" } = req.query;
     const { authorization } = req.headers;
     //   const skip = (page - 1) * limit; 
 
@@ -32,12 +32,22 @@ export default async function handler(req, res) {
       });
       
     // Find posts matching the category name (case-insensitive)
-    const posts = await Post.find({
-        category_name: { $in: [new RegExp(category.title, "i")] } // ✅ Works for arrays
-      })
-      .sort({publish_date:-1})
-      .skip(skip) // Pagination
-      .limit(extraLimit);
+    let posts;
+    if(current_content_type.length>1){
+      posts = await Post.find({
+        category_name: { $in: [new RegExp(category.title, "i")] }, // Matches category name (case-insensitive)
+        content_type: { $in: [current_content_type] } // Ensures content_type matches a specific value
+      }).sort({publish_date:-1})
+        .skip(skip) // Pagination
+        .limit(extraLimit);
+    }
+    else{
+      posts = await Post.find({
+        category_name: { $in: [new RegExp(category.title, "i")] } // Matches category name (case-insensitive)
+      }).sort({publish_date:-1})
+        .skip(skip) // Pagination
+        .limit(extraLimit);
+  }
       const hasMore = posts.length > limit; // More posts exist if length > limit
 
       // Remove the extra post from the response
@@ -49,7 +59,7 @@ export default async function handler(req, res) {
         img:category.img,
         publish_date:category.publish_date,
         podcasts_array:posts,
-        hasMore:hasMore
+        hasMore:hasMore,
       }
 
 

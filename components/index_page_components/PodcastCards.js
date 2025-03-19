@@ -93,9 +93,6 @@ const PodcastCards = ({podcasts_array,autoplay,metadataSlug}) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("PodcastCards mounted, autoplay:", autoplay);
-  }, []);
 
   useEffect(() => {
     // alert(autoplay);

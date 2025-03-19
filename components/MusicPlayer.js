@@ -8,6 +8,7 @@ import { MdOutlineClose, MdOutlinePlayCircleFilled, MdPauseCircleFilled, MdOutli
 import { MdPlaylistPlay } from "react-icons/md";
 import { Divider } from "@chakra-ui/react";
 import { FaArrowRotateLeft } from "react-icons/fa6";
+import { Show,Hide } from "@chakra-ui/react";
 import { BiSolidSkipNextCircle } from "react-icons/bi";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { BiSolidSkipPreviousCircle } from "react-icons/bi";
@@ -446,37 +447,80 @@ playNewPodcastFromPlayList(ind-1);
       {/* Floating Music Player Toggle Button */}
       {currentTrack!=null ? 
       <>
-      <IconButton
-        aria-label="Open Music Player"
-        icon={<LuAudioLines />}
-        size="lg"
-        display={isSlideOpen ? 'none' : 'flex'}
-        zIndex="100"
-        position="fixed"
-        bottom={{ base: 5, md: 100 }}
-        right={{ base: 5, md: 10 }}
-        fontSize="2xl"
-        borderRadius="full"
-        boxShadow="dark-lg"
-        bg="red.500"
-        color="white"
-        _hover={{ bg: "red.600" }}
-        onClick={OpenAndCloseSlide}
-      />
-      <Badge zIndex="100"
-        position="fixed"
-        fontSize={'md'}
-        w={'25px'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        borderRadius={'full'}
-        display={isSlideOpen ? 'none' : 'flex'}
-        h={'25px'}
-        bg="red"
-        color={'white'}
-        bottom={{ base: 50, md: 135 }}
-        right={{ base: 3, md: 8 }}>!</Badge>
-      </>
+      {/* Non-phone (Desktop, Tablet) */}
+      <Hide below="md">
+        <IconButton
+          aria-label="Open Music Player"
+          icon={<LuAudioLines />}
+          size="lg"
+          display={isSlideOpen ? "none" : "flex"}
+          zIndex="100"
+          position="fixed"
+          bottom={{ base: 5, md: 100 }}
+          right={{ base: 5, md: 10 }}
+          fontSize="2xl"
+          borderRadius="full"
+          boxShadow="dark-lg"
+          bg="red.500"
+          color="white"
+          _hover={{ bg: "red.600" }}
+          onClick={OpenAndCloseSlide}
+        />
+        <Badge
+          zIndex="100"
+          position="fixed"
+          fontSize="md"
+          w="25px"
+          h="25px"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="full"
+          display={isSlideOpen ? "none" : "flex"}
+          bg="red"
+          color="white"
+          bottom={{ base: 50, md: 135 }}
+          right={{ base: 3, md: 8 }}
+        >
+          !
+        </Badge>
+      </Hide>
+    
+      {/* Phone (Mobile) */}
+      <Show below="md">
+        <Box position="relative" display="inline-block">
+          <IconButton
+            aria-label="Open Music Player"
+            icon={<LuAudioLines />}
+            size="lg"
+            display={isSlideOpen ? "none" : "flex"}
+            zIndex="100"
+            fontSize="2xl"
+            borderRadius="full"
+            boxShadow="dark-lg"
+            bg="red.500"
+            color="white"
+            _hover={{ bg: "red.600" }}
+            onClick={OpenAndCloseSlide}
+          />
+          <Badge
+            position="absolute"
+            top="-5px"
+            right="-5px"
+            fontSize="md"
+            w="20px"
+            h="20px"
+            display={isSlideOpen ? "none" : "flex"}
+            justifyContent="center"
+            alignItems="center"
+            borderRadius="full"
+            bg="red"
+            color="white"
+          >
+            !
+          </Badge>
+        </Box>
+      </Show>
+    </>
      :
      <></> 
     }
