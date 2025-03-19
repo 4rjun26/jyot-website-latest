@@ -11,29 +11,47 @@ import { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import ScrollToTop from "@/components/index_page_components/ScrollToTop";
 import LoadingBar from "react-top-loading-bar";
+import Loader from "@/components/Loader";
 
 
 export default function App({ Component, pageProps }) {
-
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true); 
   const router = useRouter();
   useEffect(() => {
-    if (!router.events) return; // Ensure router is available
+    if (!router.isReady) return;  // Ensure router is available
 
-    const handleStart = () => setProgress(30);
-    const handleComplete = () => setProgress(100);
-    const handleError = () => setProgress(100);
+    const handleStart = () => {
+      setProgress(30);
+      setLoading(true); // Show full-screen loader
+    };
+    const handleComplete = () => {
+      setProgress(100);
+      setTimeout(() => setLoading(false), 500); // Hide loader after 500ms
+    };
+    const handleError = () => {
+      setProgress(100);
+      setTimeout(() => setLoading(false), 500);
+    };
 
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleError);
-
+    setTimeout(() => setLoading(false), 1000); // Adjust delay for smoother UX
     return () => {
       router.events.off("routeChangeStart", handleStart);
       router.events.off("routeChangeComplete", handleComplete);
       router.events.off("routeChangeError", handleError);
     };
   }, [router]);
+
+  // useEffect(() => {
+  //   if (progress === 100) {
+  //     setTimeout(() => setShowFooter(true), 300); // Small delay
+  //   }
+  // }, [progress]);
+  
+
   return (
     <>
     <Head>
@@ -47,6 +65,7 @@ export default function App({ Component, pageProps }) {
         </Head>
      <LoadingBar color="#f11946" progress={progress} onLoaderFinished={() => setProgress(0)} />
     <ChakraProvider>
+    {loading && <Loader />}
       {/* Show MobileNavbar only on small screens */}
       <Show below="lg">
         <MobileNavbar />
@@ -61,7 +80,9 @@ export default function App({ Component, pageProps }) {
         {/* <Chatbot /> */}
         <MusicPlayer />
         <Component {...pageProps} />
-        {progress < 100 && <Footer />}
+        {/* <div style={{ display: showFooter ? "block" : "none" }}> */}
+        <Footer />
+      {/* </div> */}
       </Box>
     </ChakraProvider>
     </>
