@@ -34,7 +34,7 @@ const LatestReleasesCards = ({releases,loading}) => {
             <Box w="70%" h="full" p="5px">
               <Box fontSize={{ base: "1rem", sm: "1.2rem", md: "1.5rem", lg: "1.5rem" }} w="full" h="80%">
                 <Link
-           href={release.le_type==='podcast' ? `/podcast/${release.slug}` : `/category/events/${release.slug}`}
+           href={release.le_type==='podcast' ? `/podcast/${release.slug}` : `/events/${release.slug}`}
                   fontSize={{ base: "1rem", sm: "1.2rem", md: "1.5rem", lg: "1.5rem" }}
                   fontFamily="Oswald, sans-serif"
                   fontWeight="bold"
@@ -44,13 +44,13 @@ const LatestReleasesCards = ({releases,loading}) => {
                 </Link>
               </Box>
               <Flex w="full" h="20%" gap={'10px'}>
-                        <Link  href={release.le_type==='podcast' ? '/podcast' : '/category/events'} passHref>
+                        <Link  href={release.le_type==='podcast' ? '/podcast' : '/events'} passHref>
         <Text textTransform={'capitalize'} as="span" _hover={{ color: "orange" }}>
           {release.le_type}
         </Text>
       </Link>
 |
-<Link href="#" passHref>
+
         <Text as="span" _hover={{ color: "orange" }}>
         {release.publish_date != null
             ? new Date(release.publish_date).toLocaleDateString("en-GB", {
@@ -60,7 +60,6 @@ const LatestReleasesCards = ({releases,loading}) => {
               })
             : ""}
         </Text>
-      </Link> 
               
               </Flex>
             </Box>
