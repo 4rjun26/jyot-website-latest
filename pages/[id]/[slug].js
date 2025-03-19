@@ -98,6 +98,7 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
               {video ? (
                 <>
                   {/* Video Box */}
+                  {video.link!=undefined ? 
                   <Box
                     w="100%"
                     maxW="774px"
@@ -122,7 +123,15 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
                       allowFullScreen
                     ></iframe>
                   </Box>
-      
+              : <></>
+                }
+                {video.content_type==="article" ?
+                <Box p={'0px 10px'}  w={'full'} maxW={'800px'} m={'auto'} textAlign={'center'} >
+                        <Image src={video.img} w={'full'} h={'auto'} boxShadow={'lg'} />
+                </Box>
+                :
+                <></>
+                }
                   {/* Video Details */}
                   <Flex align="start" justify="end" w="full" maxW="800px" m="auto" mb="30px" flexDirection="column" p={2}>
                     {/* Category Tags */}
@@ -188,7 +197,7 @@ const category = pathSegments.length > 1 ? decodeURIComponent(pathSegments[pathS
               ) : null}
             </>
           ) : (
-            <PodcastCards podcasts_array={video} autoplay={true} />
+            <PodcastCards podcasts_array={video} autoplay={true} metadata={category} />
           )}
         </>
       );

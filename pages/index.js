@@ -245,7 +245,7 @@ export default function Home() {
 
         <MotionBox>
           <SectionTitle text={"Jyot Podcast"} />
-          <PodcastCards podcasts_array={podcasts_array} pt={pt} />
+          <PodcastCards podcasts_array={podcasts_array} metadataSlug={"ajitjin-stavan-anandghanji-chovisi"} />
         </MotionBox>
 
         <MotionBox>

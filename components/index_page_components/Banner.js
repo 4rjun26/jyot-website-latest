@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, SimpleGrid, Card, CardBody, Heading, Text, Link, Image } from '@chakra-ui/react';
+import { Box, SimpleGrid, Card, CardBody, Heading, Text, Image } from '@chakra-ui/react';
 import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 
 const Banner = ({text}) => {
 
@@ -41,7 +42,9 @@ const Banner = ({text}) => {
                         You would be aware of the recent sacrilegious act allegedly done by the Mandir trust of Pavagadh to disrespectfully dismantle and damage ancient Jain Shwetamber murtis on <b>Pavagadh</b> Hill. The entire 'Shwetambar Murtipujak Jain Sangh' (Jains) is shocked by this activity…
                         </Text>
 
-                        <Button _hover={'none'} fontWeight={'light'} variant={'solid'} fontFamily={'Oswald, sans-serif'} mt={'25px'} as={'button'} bg={'brown'} p={'10px'} borderRadius={'5px'} color={'white'} >Read more</Button>
+                        <Link 
+                          href={'/declaration/pavagadh-tirthraksha-gachchadhipati-yugbhushansuris-letter-to-gujarat-cm'}
+                        ><Button _hover={'none'} fontWeight={'light'} variant={'solid'} fontFamily={'Oswald, sans-serif'} mt={'25px'} as={'button'} bg={'brown'} p={'10px'} borderRadius={'5px'} color={'white'} >Read more</Button></Link>
 
                         </Box>
                         

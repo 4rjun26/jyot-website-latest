@@ -21,7 +21,7 @@ const ScrollToTop = () => {
   };
 
   return (
-    <Box position="fixed" bottom="20px" right="20px" zIndex="1000">
+    <Box position="fixed" bottom="100px" right="20px" zIndex="1000">
       {isVisible && (
         <IconButton
           aria-label="Scroll to top"

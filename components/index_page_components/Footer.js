@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, SimpleGrid, Card, CardBody, Text,Button,Flex,Image, Skeleton,Tag } from "@chakra-ui/react";
+import { Box, SimpleGrid, Card, CardBody, Text,Button,Flex,Image,Link, Skeleton,Tag } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 import { BiLogoFacebook } from "react-icons/bi";
@@ -132,34 +132,41 @@ const Footer = () => {
         <Text color={'white'} mt={'30px'} mb={'10px'} fontSize={'30px'} fontFamily={'Oswald, sans-serif'} >FOLLOW US ON:</Text>
         <Divider border={'2px solid white'} />
         <Flex  mt={'30px'} w={'full'} gap={'10px'} h={'40px'}>
+              <Link href="https://www.facebook.com/jyotindia" isExternal>
         <IconButton
               icon={<BiLogoFacebook />}
               colorScheme="orange"
               fontSize={'20'}
               size="md"
               borderRadius={'50%'}
-            />
+            /></Link>
+
+<Link href="https://x.com/indiajyot" isExternal>
              <IconButton
               icon={<BsTwitterX />}
               colorScheme="orange"
               fontSize={'20'}
               size="md"
               borderRadius={'50%'}
-            />
+            /></Link>
+
+<Link href="https://www.instagram.com/jyotindia/" isExternal>
              <IconButton
              icon={<BiLogoInstagram />}
              colorScheme="orange"
              fontSize={'20'}
              size="md"
              borderRadius={'50%'}
-            />
+            /></Link>
+
+<Link href="https://www.youtube.com/jyotindia" isExternal>
              <IconButton
               icon={<BsYoutube />}
               colorScheme="orange"
               fontSize={'20'}
               size="md"
               borderRadius={'50%'}
-            />
+            /></Link>
         </Flex>
       </CardBody>
             </Card>

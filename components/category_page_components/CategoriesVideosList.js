@@ -1,14 +1,18 @@
 import React from "react";
-import { Box,SimpleGrid,Flex,Image,Text,Button,Skeleton,Tag } from "@chakra-ui/react";
+import { Box,SimpleGrid,Flex,Image,Text,IconButton,Button,Skeleton,Tag } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdPerson } from "react-icons/md";
 import { MdCalendarMonth } from "react-icons/md";
 import { useState,useEffect } from "react";
+import { PiShareFatBold } from "react-icons/pi";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 import PodcastCards from "../index_page_components/PodcastCards";
 
 
 const CategoriesVideosList = ({category})=>{
+    const toast = useToast();
+  
   // const router = useRouter();
   // const { category } = router.query;
       const [posts, setPosts] = useState([]); // Stores posts fetched from API
@@ -63,6 +67,60 @@ const CategoriesVideosList = ({category})=>{
         setPage(1);
       }, [category]);
     
+      const copyToClipboard = (album_name, ep) => {
+        const rootDomain = `${window.location.protocol}//${window.location.host}`;
+        let slug1 = album_name.toLowerCase();  // Convert to lowercase
+        slug1 = slug1.replace(/\s+/g, "-");     // Replace spaces with '-'
+        slug1 = slug1.replace(/[^a-z0-9-]/g, ""); // Remove special characters except '-'
+        slug1 = slug1.replace(/-+/g, "-");      // Remove multiple consecutive '-'
+      
+        let slug2 = ep.toLowerCase();  // Convert to lowercase
+        slug2 = slug2.replace(/\s+/g, "-");     // Replace spaces with '-'
+        slug2 = slug2.replace(/[^a-z0-9-]/g, ""); // Remove special characters except '-'
+        slug2 = slug2.replace(/-+/g, "-");      // Remove multiple consecutive '-'
+        
+        const textToCopy = `${rootDomain}/${slug1}/${slug2}`;
+      
+        // ✅ Check if `navigator.clipboard` is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast("Copied!", "Text copied to clipboard.");
+          }).catch(err => {
+            console.error("Clipboard API failed:", err);
+            fallbackCopyText(textToCopy); // Fallback if `navigator.clipboard` fails
+          });
+        } else {
+          fallbackCopyText(textToCopy); // Fallback for older browsers
+        }
+      };
+      
+      // ✅ Fallback function for unsupported browsers
+      const fallbackCopyText = (text) => {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        
+        try {
+          document.execCommand("copy");
+          showToast("Copied!", "Text copied to clipboard.");
+        } catch (err) {
+          console.error("Fallback copy failed:", err);
+        }
+      
+        document.body.removeChild(textArea);
+      };
+
+      const showToast = (title, description) => {
+        toast({
+          title,
+          description,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      };
+
     return(
         <>
         <Box w={"90%"} position="relative" overflow="hidden" margin={'auto'}>
@@ -122,7 +180,7 @@ const CategoriesVideosList = ({category})=>{
         
             <Box w={'full'} p={4}>
               {(posts.length > 0) && (posts[0].content_type === "audio" || posts[0].content_type === "music") ?
-                 <PodcastCards podcasts_array={posts} pt={"pt"} />
+                 <PodcastCards podcasts_array={posts} autoplay={false} metadataSlug={category}/>
                  :
                  <>
                  <SimpleGrid columns={{ base: 1, sm: 2, lg:3 }} spacing={4}>
@@ -148,8 +206,8 @@ const CategoriesVideosList = ({category})=>{
             ))
           : // Show actual posts
                posts.map((post,index)=>(
-                    <Box key={index} borderRadius={'15px'} m={'auto'} w={'full'} h={{md:"450px"}} minH={{ md: "450px" }}  border={'1px solid gray'}>
-                        <Box w={'full'} h={'70%'} bg={'black'} borderRadius={'15px'}>
+                    <Box key={index} borderRadius={'15px'} m={'auto'} w={'full'} pb={'0px'} h={{md:"450px"}} minH={{ md: "450px" }}  border={'1px solid gray'}>
+                        <Box w={'full'} h={'300px'} bg={'black'} borderRadius={'15px 15px 0px 0px'}>
                             <Link href={`/${category}/${post.slug}`}><Image alt="sample" borderRadius={'15px 15px 0px 0px'} src={post.img} w={'full'} _hover={{boxShadow:"dark-lg"}} h={'full'} objectFit={'contain'} transitionDuration={'0.3s'} /></Link>
                         </Box>
                         <Box p={'5px'} w={'full'} h={'30%'}>
@@ -164,7 +222,18 @@ const CategoriesVideosList = ({category})=>{
               })
             : ""}
                             </Text>
+                            <Box textAlign={'right'}>
+                                        <IconButton
+                                        fontSize={'2xl'}
+                                        variant={'ghost'}
+                                        borderRadius={'full'}
+                                          icon={<PiShareFatBold />}
+                                          colorScheme="orange"
+                                          onClick={()=>{copyToClipboard(post.category_name[0],post.title)}}
+                                        />
+                                      </Box>
                         </Box>
+                       
                     </Box>
                 ))}
                 </SimpleGrid>
