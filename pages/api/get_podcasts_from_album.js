@@ -33,7 +33,7 @@ if(type==="song"){
     .select("slug");  
     posts=await Category.find({slug:slug[0].slug})
   .limit(10);
-   podcasts=await Post.find({category_id:posts[0].id})
+   podcasts=await Post.find({category_id:posts[0].id,link: { $not: /youtube\.com|youtu\.be/ }})
    podcasts = podcasts
    .map((podcast, index) => ({
      ...podcast.toObject(), // Convert Mongoose document to plain object
@@ -53,7 +53,7 @@ else{
       .select("slug");  
  posts=await Category.find({slug:slug[0].slug})
   .limit(10);
-   podcasts=await Post.find({category_id:posts[0].id}).sort({
+   podcasts=await Post.find({category_id:posts[0].id,link: { $not: /youtube\.com|youtu\.be/ }}).sort({
     ep: 1 * 1, // Convert ep to number before sorting
   });
 }

@@ -51,6 +51,8 @@ const Footer = () => {
       fetchData(); 
     }, []); 
   return (
+    <>
+    {isLoading ? <></> : 
     <Box w="100%" bg="#1f2125" color="white">
       {/* Flex to divide Footer into two halves */}
       <Box h="50%" display="flex" alignItems="center" justifyContent="center">
@@ -192,6 +194,8 @@ const Footer = () => {
       {/* Lower half (empty for now) */}
       <Box h="50%"></Box>
     </Box>
+}
+    </>
   );
 };
 

@@ -21,7 +21,9 @@ export default async function handler(req, res) {
 // sambhavjin-stavan-anandghanji-chovisi
   const posts=await Category.find({slug:slug})
   .limit(10);
-  const podcasts=await Post.find({category_id:posts[0].id})
+  const podcasts=await Post.find({category_id:posts[0].id,
+    link: { $not: /youtube\.com|youtu\.be/ }
+  })
  const op={
     title:posts[0].title,
     desc:posts[0].desc,
