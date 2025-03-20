@@ -70,11 +70,11 @@ export default function EventsPage(){
           const result = await response.json();
     
           // Ensure posts are only updated if new data is available
-          if (result.posts && result.posts.length > 0) {
+          if (result.podcasts_array && result.podcasts_array.length > 0) {
             setTabData((prevTabData) =>
                 prevTabData.map((tab, index) =>
                     index === activeTab 
-                        ? { ...tab, posts: result.posts, hasMore: result.hasMore } 
+                        ? { ...tab, posts: result.podcasts_array, hasMore: result.hasMore } 
                         : tab
                 )
             );
@@ -105,11 +105,11 @@ export default function EventsPage(){
           const result = await response.json();
     
           // Append new posts only if they exist
-          if (result.posts && result.posts.length > 0) {
+          if (result.podcasts_array && result.podcasts_array.length > 0) {
             setTabData((prevTabData) =>
               prevTabData.map((tab, index) =>
                 index === activeTab
-                  ? { ...tab, posts: [...tab.posts, ...result.posts] }
+                  ? { ...tab, posts: [...tab.posts, ...result.podcasts_array] }
                   : tab
               )
             );
