@@ -8,6 +8,8 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { Show,Hide } from "@chakra-ui/react";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { MdSearch } from "react-icons/md";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+
 import {
     Drawer,
     DrawerBody,
@@ -22,6 +24,7 @@ import {
 const CategoryButton = ({category}) => {
   const [loading, setLoading] = useState(true);
   const [categories,setCategories]= useState([]);
+  const [topics,setTopics]= useState([]);
 
   useEffect(() => {
     const fetchPodcasts = async () => {
@@ -35,7 +38,8 @@ const CategoryButton = ({category}) => {
         if (!response.ok) throw new Error("Failed to fetch podcasts");
 
         const data = await response.json();
-        setCategories(data); 
+        setCategories(data.cats);
+        setTopics(data.topics); 
         setLoading(false);
       } catch (error) {
         console.error("Error fetching podcasts:", error);
@@ -63,10 +67,17 @@ const CategoryButton = ({category}) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader fontFamily={'Oswald, sans-serif'}>Caterogies</DrawerHeader>
+          <DrawerHeader fontFamily={'Oswald, sans-serif'}>Caterogies & Topics</DrawerHeader>
 
           <DrawerBody>
-            {loading ? 
+          <Tabs variant={'soft-rounded'} colorScheme='orange'>
+  <TabList>
+    <Tab>Categories</Tab>
+    <Tab>Topics</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel p={'0px'}>
+    {loading ? 
             <Spinner
             thickness='4px'
             speed='0.65s'
@@ -82,6 +93,28 @@ const CategoryButton = ({category}) => {
             ))
 
         }
+    </TabPanel>
+    <TabPanel p={'0px'}>
+    {loading ? 
+            <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='orange.500'
+            size='xl'
+          />
+          :
+          topics.map((category,index)=>(
+                <Flex key={category.title} transitionDuration={'0.3s'}  _hover={{bg:"rgba(236, 142, 0, 0.4)"}} alignItems={'center'} p={'5px'} w={'full'} m={'10px 0px'} borderBottom={'1px solid lightgray'}>
+            <Link onClick={onClose}  href={`/${category.slug}`}>{category.title}</Link>
+            </Flex>
+            ))
+
+        }
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+            
           </DrawerBody>
 
           
@@ -90,8 +123,8 @@ const CategoryButton = ({category}) => {
 
       
       <Hide below="lg">
-      <Button _hover={{color:"orange"}} textTransform={'uppercase'} fontWeight={'lighter'} rightIcon={<BiCategoryAlt />} ref={btnRef} variant={'unstyled'} fontFamily={'Oswald, sans-serif'} colorScheme="orange" onClick={onOpen}>
-          Categories
+      <Button _hover={{color:"orange"}} display={'flex'} alignItems={'center'} textTransform={'uppercase'} fontWeight={'lighter'} leftIcon={<BiCategoryAlt size={20} />} ref={btnRef} variant={'unstyled'} fontFamily={'Oswald, sans-serif'} colorScheme="orange" onClick={onOpen}>
+          Categories & Topics
         </Button>
       </Hide>
       <Show below="lg">

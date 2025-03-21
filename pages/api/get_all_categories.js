@@ -22,8 +22,11 @@ export default async function handler(req, res) {
 const cats = await Category.find({
         content_type: { $in: ["category"] },
     });
+    const topics = await Topic.find({
+      content_type: { $in: ["topic"] },
+  });    
 
-    return res.status(200).json(cats);
+    return res.status(200).json({cats,topics});
   } catch (error) {
     console.error("Error fetching posts:", error);
     return res.status(500).json({ error: "Internal Server Error" });
