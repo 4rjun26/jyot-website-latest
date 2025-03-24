@@ -19,44 +19,49 @@ export default async function handler(req, res) {
     // Connect to MongoDB
     await connectToDatabase();
 // sambhavjin-stavan-anandghanji-chovisi
-let slug=[],posts=[],podcasts=[];
-if(type==="song"){
- slug = await Category.find(
-      { 
-        related_content_type: { 
-          $in: ["music"],  // Must NOT contain "music"
-        }, 
-        title: { $regex: albumName, $options: "i" } 
-      }
-    )
-    .limit(10)
-    .select("slug");  
-    posts=await Category.find({slug:slug[0].slug})
-  .limit(10);
-   podcasts=await Post.find({category_id:posts[0].id,link: { $not: /youtube\.com|youtu\.be/ }})
-   podcasts = podcasts
-   .map((podcast, index) => ({
-     ...podcast.toObject(), // Convert Mongoose document to plain object
-     ep: index + 1,
-   }))
-   .sort((a, b) => a.ep - b.ep);
+let slug = [], posts = [], podcasts = [];
+
+if (type === "song") {
+  slug = await Category.find({
+    related_content_type: { 
+      $nin: ["music"],  // Must NOT contain "music"
+    }, 
+    title: { $regex: albumName, $options: "i" } 
+  })
+  .limit(10)
+  .select("slug");
+
+  posts = await Category.find({ slug: slug[0]?.slug }).limit(10);
+
+  podcasts = await Post.find({
+    category_id: posts[0]?.id,
+    link: { $not: /youtube\.com|youtu\.be/ }
+  })
+  .sort({ publish_date: -1 }) // Sort by publish_date descending
+  .map((podcast, index) => ({
+    ...podcast.toObject(),
+    ep: index + 1,
+  }));
+} else {
+  slug = await Category.find({
+    related_content_type: { 
+      $in: ["audio"],  // Must contain "audio"
+      $nin: ["music"]  // Must NOT contain "music"
+    },
+    title: { $regex: albumName, $options: "i" }
+  })
+  .limit(10)
+  .select("slug");
+
+  posts = await Category.find({ slug: slug[0]?.slug }).limit(10);
+
+  podcasts = await Post.find({
+    category_id: posts[0]?.id,
+    link: { $not: /youtube\.com|youtu\.be/ }
+  })
+  .sort({ publish_date: 1 }); // Sort by publish_date descending
 }
-else{
- slug = await Category.find({
-  related_content_type: { 
-    $in: ["audio"],  // Must contain "audio"
-    $nin: ["music"]  // Must NOT contain "music"
-  } ,
-        title: { $regex: albumName, $options: "i" } // Case-insensitive exact match
-      })
-      .limit(10)
-      .select("slug");  
- posts=await Category.find({slug:slug[0].slug})
-  .limit(10);
-   podcasts=await Post.find({category_id:posts[0].id,link: { $not: /youtube\.com|youtu\.be/ }}).sort({
-    ep: 1 * 1, // Convert ep to number before sorting
-  });
-}
+
 
     return res.status(200).json(podcasts);
   } catch (error) {

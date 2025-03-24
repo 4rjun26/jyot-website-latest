@@ -411,6 +411,7 @@ const MusicPlayer = () => {
   };
 
 const nextPodcast = async ()=>{
+  await fetchPlaylist();
   const match = title.match(/Ep (\d+)/);
 
 let episodeNumber = match ? parseInt(match[1], 10) : null;
@@ -422,6 +423,7 @@ playNewPodcastFromPlayList(ind+1);
 }
 
 const previousPodcast = async ()=>{
+  await fetchPlaylist();
   const match = title.match(/Ep (\d+)/);
 
 const episodeNumber = match ? parseInt(match[1], 10) : null;
