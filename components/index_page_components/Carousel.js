@@ -3,9 +3,11 @@ import { Box, IconButton, Flex } from "@chakra-ui/react";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
+import { useBreakpointValue } from "@chakra-ui/react";
 
-const images = ["/c3.jpg", "/c4.jpg", "/c1.jpg", "/c2.jpg"];
+const images_pc = ["/c3.jpg", "/c4.jpg", "/c1.jpg", "/c2.jpg"];
 const slugs=["podcast/abhinandanjin-stavan-anandghanji-chovisi","/podcast/mokshmarg-ni-shrenio","podcast/manushya-bhav-nu-safalya-shema","podcast/jinshasan-no-sar-namaskar-mahamantra"]
+const images_mobile = ["/c4_mobile.webp"];
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,6 +27,7 @@ const Carousel = () => {
     const interval = setInterval(nextSlide, 3000);
     return () => clearInterval(interval);
   }, []);
+  const images = useBreakpointValue({ base: images_mobile, md: images_pc });
 
   return (
     <Box position="relative" width="100vw" margin="auto" overflow="hidden">
