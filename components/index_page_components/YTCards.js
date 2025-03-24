@@ -1,23 +1,7 @@
 import React from "react";
 import { Box, SimpleGrid, Card, CardBody, Heading, Text, Link, Image } from '@chakra-ui/react';
 const YTCards = ({shorts_loading,shorts})=>{
-    const releases = [
-        {
-          vidlink: "https://www.youtube.com/embed/9HSsSXaA9Xs",
-        },
-        {
-            vidlink: "https://www.youtube.com/embed/14We8Loswv8",
-         
-        },
-        {
-            vidlink: "https://www.youtube.com/embed/_H3jst41oN4",
-         
-        },
-        {
-            vidlink: "https://www.youtube.com/embed/yxhFsIRC0J8",
-       
-        },
-      ];
+
     return(
         <>
    

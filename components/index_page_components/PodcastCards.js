@@ -106,7 +106,13 @@ const PodcastCards = ({podcasts_array,autoplay,metadataSlug}) => {
     // }
   }, [autoplay, podcasts_array]); 
 
-
+  const generateSlug = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-");
+  };
   return (
     <Box p={4} display="flex" justifyContent="center">
     <SimpleGrid
@@ -133,7 +139,7 @@ const PodcastCards = ({podcasts_array,autoplay,metadataSlug}) => {
                 <Text fontSize="0.9rem" noOfLines={2} mb="5px" fontFamily="Oswald, sans-serif">
                 Ep {ep.ep} - {ep.title} | {ep.category_name[0]}
                 </Text>
-                <Link style={{fontSize:"0.7rem",background:"brown",padding:"5px 8px",color:"white"}} href={`/${metadataSlug}`} fontSize="0.7rem" bg="brown" p="5px 8px" color="white">
+                <Link style={{fontSize:"0.7rem",background:"brown",padding:"5px 8px",color:"white"}}  href={`/${generateSlug(ep.category_name[0])}`} fontSize="0.7rem" bg="brown" p="5px 8px" color="white">
                   {ep.category_name[0]}
                 </Link>
               </Box>

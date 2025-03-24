@@ -11,23 +11,36 @@ import Banner from "@/components/index_page_components/Banner";
 import YTCards from "@/components/index_page_components/YTCards";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { Box,Text,Flex } from "@chakra-ui/react";
+import { Box,Text,Flex,SimpleGrid,Skeleton,Card,CardBody,Tag,Image,Button,Avatar } from "@chakra-ui/react";
 import { useEffect } from "react";
-
+import Link from "next/link";
+import parse from "html-react-parser";
+import { BiSolidChevronRight } from "react-icons/bi";
 
 export default function Home() {
-  const pt="ajitjin-stavan-anandghanji-chovisi";
 
   const [podcasts_array,setPodcastAray]= useState([]);
-  const [loading, setLoading] = useState(true);
+  const [podcasts_loading, setPodcastsLoading] = useState(true);
+
+  const [songs_array,setSongsArray]= useState([]);
+  const [songs_loading, setSongLoading] = useState(true);
+
   const [shorts_loading, setShortsLoading] = useState(true);
-  const [latest_releases,setLatestReleaseArray]= useState([]);
   const [shorts,setShorts]= useState([]);
+
+  const [vids_loading, setVidsLoading] = useState(true);
+  const [vids,setVids]= useState([]);
+
+  const [articles_loading, setArticlesLoading] = useState(true);
+  const [articles,setArticles]= useState([]);
+
+  const [tweets_loading, setTweetsLoading] = useState(true);
+  const [tweets,setTweets]= useState([]);
 
   const fetchPodcasts = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`/api/get_podcast_podcasts?slug=${pt}`, {
+      setPodcastsLoading(true);
+      const response = await fetch(`/api/get_latest_podcasts`, {
         headers: {
             "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
         },
@@ -36,20 +49,20 @@ export default function Home() {
 
       const data = await response.json();
       
-      setPodcastAray(data.podcasts_array); 
-      setLoading(false);
+      setPodcastAray(data); 
+      setPodcastsLoading(false);
     } catch (error) {
       console.error("Error fetching podcasts:", error);
-      setLoading(false);
+      setPodcastsLoading(false);
     } finally {
-      setLoading(false);
+      setPodcastsLoading(false);
     }
   };
 
-  const fetchLatestEvents = async () => {
+  const fetchSongs = async () => {
     try {
-      setLoading(true);
-      const response = await fetch("/api/get_latest_events", {
+      setSongLoading(true);
+      const response = await fetch(`/api/get_latest_songs`, {
         headers: {
             "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
         },
@@ -58,20 +71,20 @@ export default function Home() {
 
       const data = await response.json();
       
-      setLatestReleaseArray(data); 
-      setLoading(false);
+      setSongsArray(data); 
+      setSongLoading(false);
     } catch (error) {
       console.error("Error fetching podcasts:", error);
-      setLoading(false);
+      setSongLoading(false);
     } finally {
-      setLoading(false);
+      setSongLoading(false);
     }
   };
 
   const fetchShorts = async () => {
     try {
       setShortsLoading(true);
-      const response = await fetch("/api/get_index_shorts", {
+      const response = await fetch("/api/get_latest_shorts", {
         headers: {
             "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
         },
@@ -89,11 +102,130 @@ export default function Home() {
       setShortsLoading(false);
     }
   };
+
+  const fetchVideos = async () => {
+    try {
+      setVidsLoading(true);
+      const response = await fetch("/api/get_latest_videos", {
+        headers: {
+            "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+        },
+    }); // ✅ Adjust the API route if needed
+      if (!response.ok) throw new Error("Failed to fetch podcasts");
+
+      const data = await response.json();
+      
+      setVids(data); 
+      setVidsLoading(false);
+    } catch (error) {
+      console.error("Error fetching podcasts:", error);
+      setVidsLoading(false);
+    } finally {
+      setVidsLoading(false);
+    }
+  };
+
+  const fetchArticles = async () => {
+    try {
+      setArticlesLoading(true);
+      const response = await fetch(`/api/get_all_articles?page=1&limit=3`, {
+        headers: {
+            "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+        },
+    }); // ✅ Fetch paginated data
+      if (!response.ok) throw new Error("Failed to fetch podcasts");
+
+      const data = await response.json();
+      if (data.length === 0); // ✅ Stop loading if no more data
+
+      setArticles(data.posts); // ✅ Append new data
+
+    } catch (error) {
+      console.error("Error fetching podcasts:", error);
+    } finally {
+      setArticlesLoading(false);
+    }
+  };
+
+  const fetchTweets = async () => {
+    try {
+      setTweetsLoading(true);
+      const response = await fetch("/api/get_latest_tweets", {
+        headers: {
+            "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+        },
+    }); // ✅ Adjust the API route if needed
+      if (!response.ok) throw new Error("Failed to fetch podcasts");
+
+      const data = await response.json();
+      
+      setTweets(data); 
+      setTweetsLoading(false);
+    } catch (error) {
+      console.error("Error fetching podcasts:", error);
+      setTweetsLoading(false);
+    } finally {
+      setTweetsLoading(false);
+    }
+  };
+
+  const renderTextWithLinks = (text) => {
+    return parse(text, {
+      replace: (domNode) => {
+        if (domNode.name === "a" && domNode.attribs?.href) {
+          return (
+            <Link
+              key={domNode.attribs.href}
+              href={domNode.attribs.href}
+              isExternal
+             
+            >
+                <Text  color="blue.500"
+              _hover={{ textDecoration: "underline" }}>
+              {domNode.children[0]?.data}
+              </Text>
+            </Link>
+          );
+        }
+        if (domNode.type === "text") {
+          const words = domNode.data.split(" ").map((word, index) => {
+            if (word.startsWith("http")) {
+              return (
+                <Link
+                  key={index}
+                  href={word}
+                  isExternal
+                >
+                     <Text  color="blue.500"
+              _hover={{ textDecoration: "underline" }}>
+                  {word}{" "}
+                  </Text>
+                </Link>
+              );
+            } else if (word.startsWith("#") || word.startsWith("@")) {
+              return (
+                <Text key={index} as="span" color="blue.500">
+                  {word}{" "}
+                </Text>
+              );
+            }
+            return word + " ";
+          });
   
+          return <>{words}</>;
+        }
+      },
+    });
+  };
+
+
   useEffect(() => {
-    fetchLatestEvents();
     fetchPodcasts();
+    fetchSongs();
     fetchShorts();
+    fetchVideos();
+    fetchArticles();
+    fetchTweets();
   }, []);
 
   // const podcasts_array=[
@@ -249,12 +381,12 @@ export default function Home() {
       </motion.div>
     );
   };
-
+  const MotionIcon = motion(BiSolidChevronRight);
   return (
     <>
       <div style={{ overflow: "hidden", paddingBottom: "10px" }}>
         <Head>
-          <title>Create Next App</title>
+          <title>Home</title>
           <meta name="description" content="Generated by create next app" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
@@ -262,16 +394,27 @@ export default function Home() {
 
         <Carousel />
         
-        {/* <MotionBox> */}
-          <SectionTitle text={"Latest Releases"} />
-          <LatestReleasesCards releases={latest_releases} loading={loading} />
-        {/* </MotionBox> */}
-
         <MotionBox>
           <SectionTitle text={"Jyot Podcast"} />
           <PodcastCards podcasts_array={podcasts_array.slice(0,4)} metadataSlug={"ajitjin-stavan-anandghanji-chovisi"} />
+          <Box textAlign={'center'}>
+          <Link href={'/podcast'}>
+            <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+          </Link>
+        </Box>
+        </MotionBox>
+      
+        <MotionBox>
+          <SectionTitle text={"Jyot Music"} />
+          <PodcastCards podcasts_array={songs_array.slice(0,4)} metadataSlug={"ajitjin-stavan-anandghanji-chovisi"} />
+          <Box textAlign={'center'}>
+          <Link href={'/song'}>
+              <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+        </Link>
+        </Box>
         </MotionBox>
 
+        <br /><br />
         <MotionBox>
           <Flex
             justifyContent={"center"}
@@ -284,30 +427,190 @@ export default function Home() {
               Enrich your soul by contributing towards Prabhavana of Jinvachan.
             </Text>
           </Flex>
+
         </MotionBox>
 
         <MotionBox>
-          <SectionTitle text={"Jo Tare Wo Tirth"} />
-          <JTWTCards />
-        </MotionBox>
-
-        <MotionBox>
-          <SectionTitle text={"Vision of Dharmacharya"} />
-          <VoDCards />
-        </MotionBox>
-
-        <br />
-        <br />
-        <br />
-
-        <MotionBox>
-          <Banner />
-        </MotionBox>
-
-        <MotionBox>
-          <SectionTitle text={"Mahasattvashali"} />
+          <SectionTitle text={"Jyot Shorts"} />
           <YTCards shorts_loading={shorts_loading} shorts={shorts} />
+          <Box textAlign={'center'}>
+          <Link href={'/shorts'}>
+              <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+        </Link>
+        </Box>
         </MotionBox>
+
+        <MotionBox>
+          <SectionTitle text={"Jyot Videos"} />
+          <YTCards shorts_loading={vids_loading} shorts={vids} />
+          <Box textAlign={'center'}>
+          <Link href={'/videos'}>
+              <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+        </Link>
+        </Box>
+        </MotionBox>
+
+       <MotionBox>
+       <SectionTitle text={"Jyot Articles"} />
+        <Box p={4}>
+              <SimpleGrid columns={{ base: 1, sm: 2, lg:3 }} spacing={4}>
+                {articles_loading ? 
+                  [1,2,3].map((a, index) => (
+                    <Skeleton  key={index} h="200px" boxShadow="md" borderRadius="md" />
+                  ))
+                
+              :
+              articles.map((article, index) => (
+                <Card key={index} h="400px" boxShadow="md" borderRadius="md">
+                  <CardBody h={'full'}>
+                   
+                    {/* Image Box */}
+                    <Box w="100%" h="70%" bg={'black'} overflow={"hidden"}>
+                        <Link href={`/article/${article.slug}`}>
+                      <Image alt="sample"
+                        src={article.img}
+                        w={"100%"}
+                        h={"100%"}
+                        objectFit={'cover'}
+                        cursor="pointer"
+                        borderRadius={'5px'}
+                        transitionDuration={'0.3s'}
+                        _hover={{ transform: "scale(1.05)",opacity:"0.5" }}
+                      />
+                      </Link>
+                    </Box>
+                    <Flex w={'full'} h={'15%'}>
+                    <Text fontSize={'lg'} noOfLines={2} fontFamily={'Oswald, sans-serif'}>{article.title}</Text>
+                    </Flex>
+                    {article.category_name[0]!=null ?
+                    <Flex gap={'10px'} w={'full'} pt={'5px'}>   
+                    <Tag cursor={'pointer'} onClick={()=>{changePage(article.category_name[0])}} colorScheme="orange">{article.category_name[0]}</Tag>
+                    </Flex>
+                    :
+                    <></>  
+                        }
+                  </CardBody>
+                </Card>
+              ))
+                }
+                
+              </SimpleGrid>         
+           </Box>
+           <Box textAlign={'center'}>
+          <Link href={'/article'}>
+              <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+        </Link>
+        </Box>
+           </MotionBox>
+
+
+           <br /><br />
+           <MotionBox>
+           <SectionTitle text={"Jyot Tweets"} />
+<Box p={'2px'}>
+  <SimpleGrid columns={{ base: 1, sm: 1, lg:3 }} m={'auto'} spacing={4}>
+                    {tweets_loading ? 
+                      [1,2].map((a, index) => (
+                        <Skeleton m={'20px auto'} w={'full'} maxW={'700px'}  key={index} h="200px" boxShadow="md" borderRadius="md" />
+                      ))
+                      :
+                tweets.map((tweet, index) => (
+                     
+                     <Card  p={'0px'}  border={'1px solid lightgray'} w={'full'} maxW={'700px'} m={'20px auto'} boxShadow="none" borderRadius={tweet.reply_to!=null ? "lg" : "md"}>
+                  <CardBody h={'full'}>
+                    {tweet.reply_to!=null ? 
+                  <Box  borderRadius={'lg'} p={'20px'} pb={'30px'} bg={'rgba(249, 133, 0, 0.13)'} w={'full'}>
+                    <Flex w={'full'} >
+                    <Box p={'5px'} textAlign={'center'} w={'70px'} h={'full'}>
+                    <Avatar m={'auto'} name={tweet.reply_post.name} src={tweet.reply_post.logo} />
+                    </Box>
+                    <Box pt={'5px'} pl={'5px'} w={'full'} h={'full'}>
+                        <Text fontWeight={'bold'} fontSize={'lg'} w={'full'}>{tweet.reply_post.name}</Text>
+                        <Text w={'full'} fontSize={'sm'}>{tweet.reply_post.handle}</Text>
+                    </Box>
+                    </Flex>
+                    {/* Image Box */}
+                    <Box w="100%" overflow={"hidden"}>
+                       <Text lineHeight={'20px'} fontSize={'sm'}>
+                       {renderTextWithLinks(tweet.reply_post.desc)}
+                       </Text>
+                    </Box>
+                    <Box pt={'10px'}>
+                    <Text color={'rgb(100,100,100)'} whiteSpace={'pre-wrap'} fontSize={'sm'}>
+                    {tweet.reply_post.publish_date != null
+            ? new Date(tweet.reply_post.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
+                       </Text>
+                    </Box>
+                    </Box>
+                    :
+                    <></>
+                    }
+
+                <Box border={tweet.reply_to!=null ? '1px solid lightgray' : 'none'} mt={tweet.reply_to!=null ? '-20px' : '0px'} ml={tweet.reply_to!=null ? '10px' : '0px'} bg={'white'}borderRadius={tweet.reply_to!=null ? "30px" : "md"} p={tweet.reply_to!=null ? '20px' : '5px'} w={'full'}>
+                    <Flex position={'relative'} w={'full'} >
+                        {tweet.reply_to!=null ?
+                    <Flex w={'full'} top={'-50px'} position={'absolute'} justifyContent={'right'} h={'30px'}>
+                    <Box
+    w="0"
+    h="0"
+    mt={'-3px'}
+    borderLeft="35px solid transparent"
+    borderRight="35px solid transparent"
+    borderBottom="35px solid white" // Adjust color as needed
+      />
+  </Flex>
+  :
+  <></>
+ }
+                    <Box p={'5px'} textAlign={'center'} w={'70px'} h={'full'}>
+                    <Avatar m={'auto'} name={tweet.name} src={tweet.logo} />
+                    </Box>
+                    <Box pt={'5px'} pl={'5px'} w={'full'} h={'full'}>
+                        <Text fontWeight={'bold'} fontSize={'lg'} w={'full'}>{tweet.name}</Text>
+                        <Text w={'full'} fontSize={'sm'}>{tweet.handle}</Text>
+                    </Box>
+                    </Flex>
+                    {/* Image Box */}
+                    <Box w="100%" overflow={"hidden"}>
+                       <Text lineHeight={'20px'} fontSize={'sm'}>
+                       {renderTextWithLinks(tweet.desc)}
+                       </Text>
+                    </Box>
+                    <Box pt={'10px'}>
+                    <Text color={'rgb(100,100,100)'} whiteSpace={'pre-wrap'} fontSize={'sm'}>
+                    {tweet.publish_date != null
+            ? new Date(tweet.publish_date).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : ""}
+                       </Text>
+                    </Box>
+                    </Box>
+                    
+                  </CardBody>
+                </Card>
+        ))}
+            </SimpleGrid>
+                </Box>
+                <Box textAlign={'center'}>
+          <Link href={'/tweet'}>
+              <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
+        </Link>
+        </Box>
+                </MotionBox>
+
+        {/* <MotionBox>
+          <Banner />
+        </MotionBox> */}
+
+      
       </div>
     </>
   );

@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     posts = await Tweet.find(
         { tweet_type: "jyot" }
       )
-        .sort({ publish_date: 1 })
+        .sort({ publish_date: -1 })
         .skip(skip)
         .limit(Number(limit))
         .lean(); // Convert main posts to plain objects
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
                 tags:{$in: tagsArray}
              }
           )
-            .sort({ publish_date: 1 })
+            .sort({ publish_date: -1 })
             .skip(skip)
             .limit(Number(limit))
             .lean(); 

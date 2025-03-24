@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
     // Get count of posts
     const posts = await Post.find({
-        category_name: { $in: ["Mahasattvashali"] }
+        content_type:"video"
       })
    .sort({ publish_date: -1 })
       .limit(4);
