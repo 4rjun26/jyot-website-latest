@@ -195,7 +195,7 @@ const MobileNavbar = () => {
                 </Link>
                 <Link  onClick={onClose} className={styles.nextlink}  display={'block'}  textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
                 <BsMusicNoteBeamed size={20} />
-                  Song
+                Music
                 </Link>
     </VStack>
 

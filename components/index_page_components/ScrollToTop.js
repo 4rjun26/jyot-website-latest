@@ -4,18 +4,39 @@ import { BsChevronUp } from "react-icons/bs";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollTimeout, setScrollTimeout] = useState(null);
 
-  // Show/hide button based on scroll position
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 300);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Show button only if scrolling UP and past 300px
+      if (currentScrollY < lastScrollY && currentScrollY > 300) {
+        setIsVisible(true);
+      }
+      else{
+        setIsVisible(false);
+        setScrollTimeout(null);
+      }
+
+      setLastScrollY(currentScrollY);
+
+      // Clear any existing timeout and set a new one
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      const newTimeout = setTimeout(() => {
+        setIsVisible(false); // Hide button after 3 seconds of no scrolling
+      }, 2500);
+      setScrollTimeout(newTimeout);
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, [lastScrollY, scrollTimeout]);
 
-  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         content_type:"video"
       })
    .sort({ publish_date: -1 })
-      .limit(4);
+      .limit(3);
     return res.status(200).json(posts);
 
   // const posts=await Post.find({category_id:"672def721f63a0c51a915393"})

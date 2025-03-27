@@ -14,11 +14,12 @@ import { useInView } from "framer-motion";
 import { Box,Text,Flex,SimpleGrid,Skeleton,Card,CardBody,Tag,Image,Button,Avatar } from "@chakra-ui/react";
 import { useEffect } from "react";
 import Link from "next/link";
+import Router, { useRouter } from "next/router";
 import parse from "html-react-parser";
 import { BiSolidChevronRight } from "react-icons/bi";
 
 export default function Home() {
-
+const router=useRouter();
   const [podcasts_array,setPodcastAray]= useState([]);
   const [podcasts_loading, setPodcastsLoading] = useState(true);
 
@@ -218,7 +219,26 @@ export default function Home() {
     });
   };
 
-
+  const changePageToVideo = async (categoryName,videoSlug)=>{
+    try {
+        const response = await fetch(`/api/get_slug_from_title?categoryName=${categoryName}`, {
+          headers: {
+              "Authorization": `Bearer fr9iFhQWPB3jjxh8D4pNKmyJUeEbKTf2Zgw7QJK0`,
+          },
+      }); // ✅ Fetch paginated data
+        if (!response.ok) throw new Error("Failed to fetch podcasts");
+  
+        const data = await response.json();
+        if (data.length > 0){
+        router.push(`/${data[0].slug}/${videoSlug}`);
+            
+        }
+    } catch (error) {
+        console.error("Error fetching podcasts:", error);
+      } finally {
+        // setisLoading(false);
+      }
+  };
   useEffect(() => {
     fetchPodcasts();
     fetchSongs();
@@ -442,8 +462,46 @@ export default function Home() {
 
         <MotionBox>
           <SectionTitle text={"Jyot Videos"} />
-          <YTCards shorts_loading={vids_loading} shorts={vids} />
-          <Box textAlign={'center'}>
+           <SimpleGrid columns={{ base: 1, sm: 1, lg:3 }} spacing={4}>
+                             {vids_loading
+                               ? Array.from({ length: 9 }).map((_, index) => (
+                                   <Skeleton key={index} w={"full"} h={"450px"} borderRadius={"15px"} />
+                                 ))
+                               : vids.map((post, index) => (
+                                 <>
+                                 <Card key={index} h="400px" boxShadow="md" borderRadius="md">
+                                 <CardBody h={'full'}>
+                                 
+                                 {/* Image Box */}
+                                 <Box w="100%" h="70%" bg={'black'} overflow={"hidden"}>
+                                 <Image alt="sample"
+                                 src={post.img}
+                                 w={"100%"}
+                                 h={"100%"}
+                                 objectFit={'contain'}
+                                 cursor="pointer"
+                                 borderRadius={'5px'}
+                                 transitionDuration={'0.3s'}
+                                 _hover={{ transform: "scale(1.05)",opacity:"0.5" }}
+                                 onClick={()=>{changePageToVideo(post.category_name[0],post.slug)}}
+                                 />
+                                 </Box>
+                                 <Flex mt={'10px'} w={'full'} h={'15%'}>
+                                 <Text fontSize={'lg'} noOfLines={2} fontFamily={'Oswald, sans-serif'}>{post.title}</Text>
+                                 </Flex>
+                                 {post.category_name[0]!=null ?
+                                 <Flex gap={'10px'} w={'full'} pt={'5px'}>   
+                                 <Tag cursor={'pointer'} onClick={()=>{changePage(post.category_name[0])}} colorScheme="orange">{post.category_name[0]}</Tag>
+                                 </Flex>
+                                 :
+                                 <></>  
+                                 }
+                                 </CardBody>
+                                 </Card>
+                                 </> 
+                                 ))}
+                           </SimpleGrid>
+          <Box textAlign={'center'} mt={'20px'}>
           <Link href={'/videos'}>
               <Button transitionDuration={'0.3s'} _hover={{bg:"red.600",boxShadow:"lg",transform:"translateY(-10px)"}} size={'sm'} rightIcon={<BiSolidChevronRight size={30} />} colorScheme="orange">View All</Button>
         </Link>

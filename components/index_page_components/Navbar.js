@@ -118,7 +118,7 @@ const Navbar = () => {
               color="black"
               _hover={{ textDecoration: "none", color: "orange" }}
             >
-              Initiations
+              Initiatives
             </MenuButton>
             <MenuList
               p={"10px 10px"}
@@ -228,7 +228,7 @@ const Navbar = () => {
     <MenuItem >
     <Link className={styles.nextlink} textTransform={"uppercase"} href="/song" fontFamily={'Oswald, sans-serif'} color="black" _hover={{ textDecoration: "none", color: "orange" }}>
     <BsMusicNoteBeamed size={20} />
-    Song
+    Music
     </Link>
     </MenuItem>
   </MenuList>
